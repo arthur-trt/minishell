@@ -13,12 +13,12 @@ SRCEXT			:= c
 DEPEXT			:= d
 OBJEXT			:= o
 
-SOURCES			:= 
+SOURCES			:= srcs/main.c srcs/utils/ft_malloc.c
 OBJECTS			:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 
 #Flags, Libraries and Includes
 CFLAGS			:= -Wall -Werror -Wextra
-LIB				:= 
+LIB				:= -Llibftprintf -lftprintf
 INC				:= -I$(INCDIR) -I/usr/local/include
 INCDEP			:= -I$(INCDIR)
 
@@ -42,7 +42,7 @@ GREP			:= grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}
 NORMINETTE		:= norminette `ls | grep -v "_main*" | grep -v "test*"`
 
 #Defauilt Make
-all: directories $(TARGET)
+all: directories libft $(TARGET)
 	@$(ERASE)
 	@$(ECHO) "$(TARGET)\t\t[$(C_SUCCESS)✅$(C_RESET)]"
 	@$(ECHO) "$(C_SUCCESS)All done, compilation successful! 👌 $(C_RESET)"
@@ -82,6 +82,9 @@ $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@sed -e 's|.*:|$(BUILDDIR)/$*.$(OBJEXT):|' < $(BUILDDIR)/$*.$(DEPEXT).tmp > $(BUILDDIR)/$*.$(DEPEXT)
 	@sed -e 's/.*://' -e 's/\\$$//' < $(BUILDDIR)/$*.$(DEPEXT).tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $(BUILDDIR)/$*.$(DEPEXT)
 	@rm -f $(BUILDDIR)/$*.$(DEPEXT).tmp
+
+libft:
+	@make -s -C libftprintf/
 
 norm:
 	@$(NORMINETTE) | $(GREP) -v "Not a valid file" | $(GREP) "Error\|Warning" -B 1 || true
