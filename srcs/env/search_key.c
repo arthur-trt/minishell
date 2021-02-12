@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   search_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/11 15:11:32 by atrouill          #+#    #+#             */
-/*   Updated: 2021/02/07 18:51:48 by atrouill         ###   ########.fr       */
+/*   Created: 2021/01/28 15:42:56 by atrouill          #+#    #+#             */
+/*   Updated: 2021/02/12 14:49:55 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char *argv[], char **envp)
+char	*search_env(t_env env, char *key)
 {
-	t_env	*env;
+	t_env	tmp;
 
-	(void)argc;
-	(void)argv;
-	env = NULL;
-	construct_env(&(env), envp);
-	print_env(env);
-	free_env(&env);
-	free_env(&env);
-	return (0);
+	tmp = env;
+	while(tmp.next != NULL)
+	{
+		if (!ft_strncmp(tmp.key, key, ft_strlen(key)))
+		{
+			return (tmp.value);
+		}
+		tmp = *(tmp.next);
+	}
+	return NULL;
 }

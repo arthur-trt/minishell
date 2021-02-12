@@ -1,8 +1,12 @@
 #Compiler and Linker
-CC				:= clang-9
+CC			:= clang-9
 
 #The Target Binary Program
 TARGET			:= minishell
+
+BUILD			:= release
+
+include sources.mk
 
 #The Directories, Source, Includes, Objects, Binary and Resources
 SRCDIR			:= srcs
@@ -13,13 +17,18 @@ SRCEXT			:= c
 DEPEXT			:= d
 OBJEXT			:= o
 
-SOURCES			:= srcs/main.c srcs/utils/ft_malloc.c
 OBJECTS			:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 
 #Flags, Libraries and Includes
-CFLAGS			:= -Wall -Werror -Wextra
-LIB				:= -Llibftprintf -lftprintf
-INC				:= -I$(INCDIR) -I/usr/local/include
+cflags.release		:= -Wall -Werror -Wextra
+cflags.debug		:= -Wall -Werror -Wextra -DDEBUG -ggdb -fsanitize=address -fno-omit-frame-pointer
+CFLAGS			:= $(cflags.$(BUILD))
+
+lib.release		:= -Llibftprintf -lftprintf
+lib.debug		:= $(lib.release) -fsanitize=address -fno-omit-frame-pointer
+LIB			:= $(lib.$(BUILD))
+
+INC			:= -I$(INCDIR) -I/usr/local/include
 INCDEP			:= -I$(INCDIR)
 
 # Colors
@@ -38,8 +47,8 @@ ERASE			:= $(ECHO) $(ES_ERASE)
 HIDE_STD		:= > /dev/null
 HIDE_ERR		:= 2> /dev/null || true
 
-GREP			:= grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}
-NORMINETTE		:= norminette `ls | grep -v "_main*" | grep -v "test*"`
+GREP			:= grep --color=auto --exclude-dir=.git
+NORMINETTE		:= norminette `ls`
 
 #Defauilt Make
 all: directories libft $(TARGET)
@@ -58,10 +67,14 @@ directories:
 #Clean only Objecst
 clean:
 	@$(RM) -rf $(BUILDDIR)
+	@make $@ -s -C libftprintf
+
 
 #Full Clean, Objects and Binaries
 fclean: clean
 	@$(RM) -rf $(TARGETDIR)
+	@make $@ -s -C libftprintf
+
 
 #Pull in dependency info for *existing* .o files
 -include $(OBJECTS:.$(OBJEXT)=.$(DEPEXT))
@@ -84,10 +97,11 @@ $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@rm -f $(BUILDDIR)/$*.$(DEPEXT).tmp
 
 libft:
-	@make -s -C libftprintf/
+	@make -s -C libftprintf
+
 
 norm:
 	@$(NORMINETTE) | $(GREP) -v "Not a valid file" | $(GREP) "Error\|Warning" -B 1 || true
 
 #Non-File Targets
-.PHONY: all re clean fclean norm
+.PHONY: all re clean fclean norm libft
