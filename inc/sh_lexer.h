@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sh_lexer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/11 15:11:32 by atrouill          #+#    #+#             */
-/*   Updated: 2021/03/01 16:27:00 by atrouill         ###   ########.fr       */
+/*   Created: 2021/02/25 14:58:54 by atrouill          #+#    #+#             */
+/*   Updated: 2021/03/01 18:45:33 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef SH_LEXER_H
+# define SH_LEXER_H
 
-int	main(int argc, char *argv[], char **envp)
+typedef struct		s_lexer
 {
+	char			*cmd;
+	bool			pipe_right;
+	bool			pipe_left;
+	struct s_lexer	*next;
+}					t_lexer;
 
-	t_lexer *test;
-	(void)argc;
-	(void)envp;
+void	add_cmd_to_lexer(t_lexer **lexer, char *in, bool left, bool right);
+t_lexer	*lexer(char *input);
+void	print_lexer(t_lexer lexer);
 
-	test = lexer(argv[1]);
-	print_lexer(*test);
-
-	return (0);
-}
+#endif

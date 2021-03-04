@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sh_constants.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/11 15:11:32 by atrouill          #+#    #+#             */
-/*   Updated: 2021/03/01 16:27:00 by atrouill         ###   ########.fr       */
+/*   Created: 2021/02/25 15:06:09 by atrouill          #+#    #+#             */
+/*   Updated: 2021/02/25 15:09:22 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef SH_CONSTANTS_H
+# define SH_CONSTANTS_H
 
-int	main(int argc, char *argv[], char **envp)
-{
+# define STRONG_QUOTE	'\''
+# define WEAK_QUOTE		'\"'
+# define PIPE			'|'
+# define BACKSLAH		'\\'
 
-	t_lexer *test;
-	(void)argc;
-	(void)envp;
-
-	test = lexer(argv[1]);
-	print_lexer(*test);
-
-	return (0);
-}
+#endif

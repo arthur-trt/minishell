@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   print_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/11 15:11:32 by atrouill          #+#    #+#             */
-/*   Updated: 2021/03/01 16:27:00 by atrouill         ###   ########.fr       */
+/*   Created: 2021/03/01 16:22:52 by atrouill          #+#    #+#             */
+/*   Updated: 2021/03/01 16:25:39 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char *argv[], char **envp)
+void	print_lexer(t_lexer lexer)
 {
+	t_lexer tmp;
 
-	t_lexer *test;
-	(void)argc;
-	(void)envp;
-
-	test = lexer(argv[1]);
-	print_lexer(*test);
-
-	return (0);
+	tmp = lexer;
+	while (tmp.next != NULL)
+	{
+		printf("cmd : %s\n", tmp.cmd);
+		printf("pipe right : %d\n", tmp.pipe_right);
+		printf("pipe_left : %d\n", tmp.pipe_left);
+		tmp = *(tmp.next);
+	}
 }

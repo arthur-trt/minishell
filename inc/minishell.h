@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 15:11:42 by atrouill          #+#    #+#             */
-/*   Updated: 2021/01/28 14:50:40 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/02/25 15:14:59 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@
 
 # include "structures.h"
 # include "functions.h"
+# include "sh_lexer.h"
+# include "sh_constants.h"
 
 #endif
