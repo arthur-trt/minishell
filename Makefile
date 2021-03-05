@@ -1,5 +1,5 @@
 #Compiler and Linker
-CC			:= clang-9
+CC			:= gcc
 
 #The Target Binary Program
 TARGET			:= minishell
