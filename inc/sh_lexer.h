@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 14:58:54 by atrouill          #+#    #+#             */
-/*   Updated: 2021/03/05 15:34:28 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/03/05 18:47:46 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ t_lexer	*lexer(char *input);
 void	print_lexer(t_lexer *lexer);
 int		continue_while_quote(char *str, int pos);
 t_token	find_previous_token(char *str, int last_pos);
+void	free_lexer(t_lexer **lexer);
+char	*clean_cmd(char *input);
 
 
 #endif

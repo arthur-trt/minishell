@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:22:52 by atrouill          #+#    #+#             */
-/*   Updated: 2021/03/05 15:46:12 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/03/05 18:56:41 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_lexer(t_lexer *lexer)
 	tmp = lexer;
 	while (tmp)
 	{
-		printf("cmd : %s\n", tmp->cmd);
+		printf("cmd : \"%s\"\n", tmp->cmd);
 		printf("token_type : %d\n\n", tmp->token);
 		tmp = tmp->next;
 	}
