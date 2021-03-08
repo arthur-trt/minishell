@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 14:59:07 by atrouill          #+#    #+#             */
-/*   Updated: 2021/03/05 19:47:45 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/03/08 11:01:29 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@ int		continue_while_quote(char *str, int pos)
 	char	quote;
 
 	quote = str[pos];
-	if (str[pos - 1] == BACKSLAH)
-	{
-		return(++pos);
-	}
 	pos++;
 	while (str[pos] && str[pos] != quote)
 		pos++;
@@ -42,7 +38,7 @@ t_token	find_previous_token(char *str, int last_pos)
 
 t_lexer	*lexer(char *input)
 {
-	t_lexer	*lexer;5
+	t_lexer	*lexer;
 	int		i;
 	int		last_pos;
 
@@ -52,8 +48,8 @@ t_lexer	*lexer(char *input)
 	while (input[i] != '\0')
 	{
 		if ((input[i] == QUOTE || input[i] == DQUOTE) &&
-			input[i - 1] != BACKSLAH)
-			i = continue_while_quote(input, i);
+			((i > 0 && input[i - 1] != BACKSLAH) || i == 0))
+				i = continue_while_quote(input, i);
 		else if (input[i] == PIPE || input[i] == SEMICOLON)
 		{
 			add_cmd_to_lexer(
