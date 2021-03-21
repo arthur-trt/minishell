@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 14:59:07 by atrouill          #+#    #+#             */
-/*   Updated: 2021/03/05 19:47:45 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/03/07 13:17:00 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_token	find_previous_token(char *str, int last_pos)
 
 t_lexer	*lexer(char *input)
 {
-	t_lexer	*lexer;5
+	t_lexer	*lexer;
 	int		i;
 	int		last_pos;
 
