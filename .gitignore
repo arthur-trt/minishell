@@ -4,3 +4,4 @@ a.out.dSYM
 obj/*
 *.o
 *.d
+bin/*

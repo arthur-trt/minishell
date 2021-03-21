@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 15:11:32 by atrouill          #+#    #+#             */
-/*   Updated: 2021/03/05 18:54:45 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/03/08 11:02:30 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	main(int argc, char *argv[], char **envp)
 	{
 
 		test = lexer(input);
-//		test = lexer(argv[1]);
 		#ifdef DEBUG
 			print_lexer(test);
 		#endif
