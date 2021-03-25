@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 17:12:48 by jcueille          #+#    #+#             */
-/*   Updated: 2021/03/25 14:46:15 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/03/25 15:07:05 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <stdlib.h>
 //#include "./srcs/libft/libft.h"
 //#include "./srcs/Minishell.h"
-#include "./libftprintf/includes/libft.h"
 #include "./inc/minishell.h"
 
 t_env *g_env;
