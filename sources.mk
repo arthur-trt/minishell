@@ -6,12 +6,6 @@ SOURCES		+=                   		\
 		srcs/main.c                 	\
 
 
-## SRCS/INPUT ##
-
-SOURCES		+=                   		\
-		srcs/input/input.c          	\
-
-
 ## SRCS/UTILS ##
 
 SOURCES		+=                   		\
@@ -27,9 +21,9 @@ SOURCES		+=                   		\
 		srcs/env/free.c             	\
 
 
-## SRCS/PARSER ##
+## SRCS/INPUT ##
 
 SOURCES		+=                   		\
-		srcs/parser/parser.c        	\
+		srcs/input/input.c          	\
 
 
