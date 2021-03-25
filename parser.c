@@ -6,14 +6,18 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 17:12:48 by jcueille          #+#    #+#             */
-/*   Updated: 2021/03/24 16:53:06 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/03/25 14:46:15 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "./srcs/libft/libft.h"
-#include "./srcs/Minishell.h"
+//#include "./srcs/libft/libft.h"
+//#include "./srcs/Minishell.h"
+#include "./libftprintf/includes/libft.h"
+#include "./inc/minishell.h"
+
+t_env *g_env;
 
 void	ft_new_env(void)
 {
@@ -241,19 +245,9 @@ static char	*ft_search_var(char *s, int *inc, int *i)
 	}
 	*inc += ft_strlen(name);
 	free(name);
-	// if (s[++j] && flag == 1)
-	// {
-		// if (res)
-			// name = ft_strjoin(res, &s[j]);
-		// else
-			// name = ft_strdup(&s[j]);
-	// }
-	//else
 	if (res)
 		res = ft_remove_spaces(res);
 	return (res);
-	//free(res);
-	//return (name);
 }
 
 void	ft_listclear(t_list **lst)
@@ -338,6 +332,7 @@ char	*ft_concat(t_list *list, int len)
 {
 	t_list	*tmp;
 	char	*res;
+	char	*ptr;
 	int		i;
 	int		j;
 
@@ -350,10 +345,11 @@ char	*ft_concat(t_list *list, int len)
 	tmp = list;
 	while (tmp)
 	{
+		ptr = tmp->content;
 		j = 0;
-		while (tmp->content[j])
+		while (ptr[j])
 		{
-			res[i] = tmp->content[j];
+			res[i] = ptr[j];
 			i++;
 			j++;
 		}
@@ -574,12 +570,12 @@ int			main(void)
 	tmp = command;
 	while (tmp)
 	{
-		printf("S IS %s\n", tmp->content);
+		printf("S IS %s\n", (char *)tmp->content);
 		tmp = tmp->next;
 	}
 	printf("%s\n", s);
 	free(s);
-	ft_export(command);
+	//ft_export(command);
 	ft_listclear(&command);
 	ft_free_env();
 	return (0);
