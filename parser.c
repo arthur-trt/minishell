@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 17:12:48 by jcueille          #+#    #+#             */
-/*   Updated: 2021/03/22 18:16:16 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/03/24 16:53:06 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_new_env(void)
 	tmp = malloc(sizeof(t_env));
 	g_env->next = tmp;
 	tmp->key = ft_strdup("VARZ");
-	tmp->value = ft_strdup("VALUZ");
+	tmp->value = ft_strdup("VA     LUW");
 	tmp->next = NULL;
 }
 
@@ -108,11 +108,105 @@ static char	*ft_single(char *s, int *i)
 	return (res);
 }
 
+// void				ft_space_skip(char *s, int *i)
+// {
+// 	while (s[*i] == ' ')
+// 		(*i)++;
+// }
+
+// void ft_add_chain(t_list **buff, int *i, char *s, int *len)
+// {
+// 	int	j;
+// 	t_list	*tmp;
+// 	char	*m;
+
+// 	j = *i;
+// 	while (s[*i] && s[*i] != ' ')
+// 		(*i)++;
+// 	m = ft_substr(s, j, *i - j);
+// 	tmp = ft_lstnew(m);
+// 	ft_lstadd_back(&buff, tmp);
+// 	(*len) += ft_strlen(m);
+// 	free(m);
+// }
+
+// void	ft_remove_spaces(char **s)
+// {
+// 	t_list	*buff;
+// 	t_list	*tmp;
+// 	char	*res;
+// 	int		len;
+// 	int		i;
+
+// 	buff = NULL;
+// 	res = NULL;
+// 	i = -1;
+// 	while (*s[++i])
+// 	{
+// 		if (*s[i] == ' ')
+// 			ft_space_skip(*s, &i);
+// 		if (*s[i])
+// 			ft_add_chain(&buff, &i, *s, &len);
+// 	}
+// 	res = ft_concat(buff, len);
+// 	free(*s);
+// 	*s = res;
+// }
+
+char	*ft_add_space(char	**ss, int i, char *tmp)
+{
+	char	*spaced;
+	char	*joined;
+
+	spaced = NULL;
+	if(!(spaced = ft_strjoin(ss[i], " ")))
+		return (NULL);
+	if (tmp)
+	{
+		joined = ft_strjoin(tmp, spaced);
+		free(tmp);
+		return (joined);
+	}
+	return (spaced);
+}
+
+char	*ft_remove_spaces(char *s)
+{
+	char	**ss;
+	char	*tmp;
+	char	*res;
+	int		i;
+
+	i = -1;
+	res = 0;
+	tmp = NULL;
+	res = NULL;
+	ss = ft_split(s, ' ');
+	free(s);
+	while (ss[++i])
+	{
+		if(!(tmp) && !(ss[i + 1]))
+			res = ft_strdup(ss[i]);
+		else if (ss[i + 1])
+			tmp = ft_add_space(ss, i, tmp);
+		else
+			res = ft_strjoin(tmp, ss[i]);
+		free(ss[i]);
+	}
+	//if (tmp)
+	//	 free(tmp);
+	// if (ss)
+		// free(ss);
+
+	return (res);
+	
+}
+
 /*
 **	RETRIEVE VAR VALUE
 */
 
-static char	*ft_search_var(char *s, int *inc, int flag, int *i)
+static char	*ft_search_var(char *s, int *inc, int *i)
 {
 	int		k;
 	int		j;
@@ -141,23 +235,25 @@ static char	*ft_search_var(char *s, int *inc, int flag, int *i)
 	name = ft_substr(s, k, j - k);
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->key, name, ft_strlen(tmp->key)) == 0)
+		if (!(ft_strcmp(name, tmp->key)))
 			res = ft_strdup(tmp->value);
 		tmp = tmp->next;
 	}
 	*inc += ft_strlen(name);
 	free(name);
-	if (s[++j] && flag == 1)
-	{
-		if (res)
-			name = ft_strjoin(res, &s[j]);
-		else
-			name = ft_strdup(&s[j]);
-	}
-	else
-		return (res);
-	free(res);
-	return (name);
+	// if (s[++j] && flag == 1)
+	// {
+		// if (res)
+			// name = ft_strjoin(res, &s[j]);
+		// else
+			// name = ft_strdup(&s[j]);
+	// }
+	//else
+	if (res)
+		res = ft_remove_spaces(res);
+	return (res);
+	//free(res);
+	//return (name);
 }
 
 void	ft_listclear(t_list **lst)
@@ -208,7 +304,7 @@ int			ft_dollar(char *s, int *i, t_list **list, int *len)
 	int		inc;
 	t_list	*tmp;
 
-	if (!(res = ft_search_var(s, &inc, 0, i)))
+	if (!(res = ft_search_var(s, &inc, i)))
 		return (0);
 	if (!(tmp = ft_lstnew(res)))
 		return (-1);
@@ -351,7 +447,7 @@ char	*ft_apply_var(char *s, int *i, char *res)
 	int		inc;
 
 	tmp_bis = NULL;
-	tmp_bis = ft_search_var(s, &inc, 0, i);
+	tmp_bis = ft_search_var(s, &inc, i);
 	(*i) += inc;
 	if (!(tmp_bis))
 		return (res);
@@ -418,7 +514,7 @@ t_list		*ft_parse(char *s)
 		{
 			if (s[i] == '\"')
 			{
-				if (r = ft_apply_double(s, &i, &ft_double, &res))
+				if ((r = ft_apply_double(s, &i, &ft_double, &res)))
 				{
 					ft_double_error(r, command, res);
 					return (NULL);
@@ -466,14 +562,14 @@ void	ft_free_env(void)
 	}
 }
 
-int	main(void)
+int			main(void)
 {
-	char *s;
+	char	*s;
 	t_list	*command;
 	t_list	*tmp;
 
 	ft_new_env();
-	s = ft_strdup("\"test 3 $\" \"lol\\n\'\"");
+	s = ft_strdup("export var=lol");
 	command = ft_parse(s);
 	tmp = command;
 	while (tmp)
@@ -482,11 +578,9 @@ int	main(void)
 		tmp = tmp->next;
 	}
 	printf("%s\n", s);
-	
 	free(s);
+	ft_export(command);
 	ft_listclear(&command);
 	ft_free_env();
-	//ft_env();
-	//ft_pwd();
 	return (0);
 }
