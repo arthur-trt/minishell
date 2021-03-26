@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 17:12:48 by jcueille          #+#    #+#             */
-/*   Updated: 2021/03/25 19:15:04 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/03/26 13:59:22 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,9 @@ char	*ft_remove_spaces(char *s)
 			res = ft_strjoin(tmp, ss[i]);
 		free(ss[i]);
 	}
+	free(tmp);
+	if (ss)
+		free(ss);
 	return (res);
 }
 
@@ -320,7 +323,7 @@ char	*ft_concat(t_list *list, int len)
 	return (res);
 }
 
-int		ft_check_char(char *s, int *i, int *len, t_list **list)
+int		ft_check_double(char *s, int *i, int *len, t_list **list)
 {
 	int	r;
 
@@ -352,7 +355,7 @@ char	*ft_double(char *s, int *i, int *r)
 	list = NULL;
 	res = NULL;
 	(*i)++;
-	if ((*r) = ft_check_char(s, i, &len, &list))
+	if ((*r) = ft_check_double(s, i, &len, &list))
 		return (NULL);
 	if (s[*i] != '\"')
 	{
@@ -448,24 +451,49 @@ int		ft_empty_buffer(char **s, t_list **command)
 	return (0);
 }
 
-void	ft_parse_error(t_list *command)
+int		ft_parse_error(t_list *command)
 {
 	if (command)
 	{
 		ft_listclear(&command);
 		printf("There's been a malloc error.\n");
 	}
+	return (-1);
 }
 
-void	ft_double_error(int r, t_list *command, char *res)
+int		ft_double_error(int r, t_list *command, char *res)
 {
 	if (res)
 		free(res);
 	ft_listclear(&command);
 	if (r == -3)
+	{
 		printf("DOUBLE QUOTES NOT CLOSED\n");
+		return (-2);
+	}
+	printf("There's been a malloc error.\n");
+	return (-1);
+}
+
+int			ft_check_char(t_list *command, char **res, char *s, int *i)
+{
+	int	r;
+
+	r = 0;
+	if (s[*i] == '\"')
+	{
+		if ((r = ft_apply_double(s, i, &ft_double, res)))
+			return (ft_double_error(r, command, *res));
+	}
+	else if (s[*i] == '\'')
+		*res = ft_apply(s, i, &ft_single, *res);
+	else if (s[*i] == '$')
+		*res = ft_apply_var(s, i, *res);
 	else
-		printf("There's been a malloc error.\n");
+		*res = ft_apply(s, i, &ft_string, *res);
+	if (!(*res))
+		return (ft_parse_error(command));
+	return (r);
 }
 
 t_list		*ft_parse(char *s)
@@ -483,25 +511,8 @@ t_list		*ft_parse(char *s)
 	{
 		if (s[i] != ' ')
 		{
-			if (s[i] == '\"')
-			{
-				if ((r = ft_apply_double(s, &i, &ft_double, &res)))
-				{
-					ft_double_error(r, command, res);
-					return (NULL);
-				}
-			}
-			else if (s[i] == '\'')
-				res = ft_apply(s, &i, &ft_single, res);
-			else if (s[i] == '$')
-				res = ft_apply_var(s, &i, res);
-			else
-				res = ft_apply(s, &i, &ft_string, res);
-			if (!(res))
-			{
-				ft_parse_error(command);
+			if (ft_check_char(command, &res, s, &i))
 				return (NULL);
-			}
 		}
 		else if (s[i] == ' ')
 			if (ft_empty_buffer(&res, &command))
@@ -534,7 +545,7 @@ int			main(void)
 	t_list	*tmp;
 
 	ft_new_env();
-	s = ft_strdup("Je fais des tests 'quel plaisir' \"hamdoulilah\"${VAR} mdr \" lol ${VAR}\"");
+	s = ft_strdup("\"\"");
 	command = ft_parse(s);
 	tmp = command;
 	while (tmp)
