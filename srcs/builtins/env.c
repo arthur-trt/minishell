@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/11 15:11:42 by atrouill          #+#    #+#             */
-/*   Updated: 2021/03/26 16:35:04 by jcueille         ###   ########.fr       */
+/*   Created: 2021/02/12 13:57:43 by jcueille          #+#    #+#             */
+/*   Updated: 2021/03/19 15:49:47 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../libft/libft.h"
+#include "../Minishell.h"
+#include <unistd.h>
 
-# include "../libftprintf/includes/libftprintf.h"
+void	ft_env(void)
+{
+	t_env		*env;
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include <unistd.h>
-
-# include "structures.h"
-# include "functions.h"
-# include "sh_parser.h"
-
-#endif
+	env = g_env;
+	while (env)
+	{
+		ft_putstr_fd(env->key, 1);
+		write(1, "=", 1);
+		ft_putstr_fd(env->value, 1);
+		ft_putstr_fd("\n", 1);
+		env = env->next;
+	}
+}

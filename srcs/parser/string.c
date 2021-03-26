@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/11 15:11:42 by atrouill          #+#    #+#             */
-/*   Updated: 2021/03/26 16:35:04 by jcueille         ###   ########.fr       */
+/*   Created: 2021/03/26 16:29:08 by jcueille          #+#    #+#             */
+/*   Updated: 2021/03/26 16:37:53 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../inc/minishell.h"
 
-# include "../libftprintf/includes/libftprintf.h"
+char	*ft_string(char *s, int *i)
+{
+	int		j;
+	char	*res;
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include <unistd.h>
-
-# include "structures.h"
-# include "functions.h"
-# include "sh_parser.h"
-
-#endif
+	j = *i;
+	while (s[j] && s[j] != ' ' && s[j] != '\"' && s[j] != '\'' && s[j] != '$')
+	{
+		if (s[j] == '\\')
+		{
+			ft_remove_char(s, j);
+			j--;
+		}
+		j++;
+	}
+	res = ft_substr(s, *i, j - *i);
+	(*i) = j - 1;
+	return (res);
+}
