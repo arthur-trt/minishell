@@ -6,12 +6,12 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 15:38:43 by jcueille          #+#    #+#             */
-/*   Updated: 2021/03/26 15:14:27 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/03/29 16:51:54 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libftprintf/includes/libft.h"
-//#include "../Minishell.h"
+#include "../../sh_parser.h"
 
 void	ft_listclear(t_list **lst)
 {
@@ -62,66 +62,92 @@ char	*ft_concat(t_list *list, int len)
 	return (res);
 }
 
-
-
-int		ft_search_value(t_list *cmd, char **key)
+int			ft_str_isalnum(char *s)
 {
-	t_list	*l;
-	t_list	*tmp;
-	t_list	*buff;
-	int		i;
-	int		j;
+	int	i;
 
-	l = cmd;
-	buff = NULL;
-	while (l)
+	i = 0;
+	while (s[i])
 	{
-		i = 0;
-		while (l->content[i] && l->content[i] != '=' && l->content[i] != ' ')
-			i++;
-		if (l->content[i] == '=')
-		{
-			if (!(buff))
-			{
-				if (!(*key = ft_substr(l->content, 0, i - 1)))
-					return (-1);
-				return (0);
-			}
-			if (!(tmp = ft_lstnew(key)))
-				return (-2);
-			ft_lstadd_back(&buff, tmp);
-			if (!(*key = ft_concat(buff)))
-				return (-3);
+		if (!(ft_isalnum(s[i])))
 			return (0);
-		}
-		else if (l->content[i] == ' ')
+		i++;
+	}
+	return (1);
+}
+
+int		ft_concat_value(t_env *env, char **split)
+{
+	int		i;
+	char	*tmp;
+	char	*tmp2;
+	char	*tmp3;
+
+
+	i = 1;
+	while (split[i])
+	{
+		if (i == 1)
 		{
-			if (buff)
-				ft_listclear(&buff);
-		}
+			if (!(tmp = ft_strdup(split[i])))
+				return (-1);
 		else
 		{
-			if (!(*key = ft_substr(l->content, 0, i - 1)))
-				return (-1);
-			return (0);
+			if (!(tmp2 = ft_strjoin(" ", split[i])))
+				return (-2);
+			if (!(tmp3 = ft_strjoin(tmp, tmp2)))
+				return (-3);
+			free(tmp);
+			free(tmp2);
+			tmp = tmp3;
 		}
-		if (!(tmp = ft_lstnew(key)))
+		i++;
+	}
+	return (0);
+}
+
+int			*ft_search_keyvalue(char **split, t_env *env)
+{
+	if (!(ft_str_isalnum(split[0])))
+		return (0);
+	if (!(env->key = ft_strdup(split[0])))
+		return (-1);
+	if (split[1])
+	{
+		if (ft_concat_value(env, split))
 			return (-2);
-		ft_lstadd_back(&buff, tmp);
-		l = l->next;
+	}
+	return (0);
+}
+
+int		ft_export(t_list *cmd)
+{
+	t_env	*res;
+	t_list	*tmp;
+
+	res = NULL;
+	tmp = cmd;
+	while (tmp)
+	{
+		if (split = ft_split(tmp->content, '='))
+		{
+			res = ft_search_keyvalue(split, res);
+		}
+		tmp = tmp->next;
 	}
 }
-
-
-void	ft_export(t_list *cmd)
-{
-	t_env	*tmp;
-	char	*key;
-	int		i;
-	int		j;
-
-	i = -1;
-	key = NULL;
-	tmp = g_env;
-	ft_search_value(cmd, &key);
-}
+/*
+** 1. Retrieve key
+**		a. Cycle throught lst
+		b. Cycle throught eqch str unti = or space found
+		c. Substr 0 - =
+		d. Passer le lst et la position de = a retrieve value
+** 2. Retrieve value
+**		tant que str != space ou \0
+**		substr
+** 3. Add key value to path
+	check if key aready exists
+		remove maillon if so
+	create maillon with key value
+	add to path
+*/

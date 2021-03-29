@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:47:10 by atrouill          #+#    #+#             */
-/*   Updated: 2021/01/28 15:12:07 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/03/29 14:25:34 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,5 @@ typedef struct		s_env
 	char			*value;
 	struct s_env	*next;
 }					t_env;
-
 
 #endif
