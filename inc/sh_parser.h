@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 15:58:32 by jcueille          #+#    #+#             */
-/*   Updated: 2021/03/26 16:30:59 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/03/31 12:52:09 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 # define SH_PARSER_H
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct		s_list
-{
-	void			*content;
-	struct s_list	*next;
-}					t_list;
-
 
 char	*ft_double(char *s, int *i, int *r);
 char	*ft_concat(t_list *list, int len);

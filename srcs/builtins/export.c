@@ -6,148 +6,152 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 15:38:43 by jcueille          #+#    #+#             */
-/*   Updated: 2021/03/29 16:51:54 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/05 16:38:13 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libftprintf/includes/libft.h"
-#include "../../sh_parser.h"
+#include "../../inc/minishell.h"
+#include "../../inc/sh_parser.h"
+#include "../../inc/sh_builtins.h"
 
-void	ft_listclear(t_list **lst)
+//extern t_env *g_env;
+t_env *g_env;
+
+int			ft_get_value(char *s, int *i, char **value)
 {
-	t_list *nxt;
-	t_list *tmp;
+	int	k;
 
-	if (*lst)
+	(*i)++;
+	k = *i;
+	if (s[*i])
 	{
-		tmp = *lst;
-		while (tmp)
-		{
-			nxt = (tmp)->next;
-			free(tmp->content);
-			tmp->content = NULL;
-			free(tmp);
-			tmp = nxt;
-		}
-		*lst = NULL;
+		while (s[*i])
+			(*i)++;
 	}
+	if (!(*value = ft_substr(s, k, *i - k)))
+		return (-1);
+	return (0);
 }
 
-char	*ft_concat(t_list *list, int len)
-{
-	t_list	*tmp;
-	char	*res;
-	int		i;
-	int		j;
-
-	i = 0;
-	if (!(res = ft_calloc(len + 1, sizeof(char))))
-	{
-		ft_listclear(&list);
-		return (NULL);
-	}
-	tmp = list;
-	while (tmp)
-	{
-		j = 0;
-		while (tmp->content[j])
-		{
-			res[i] = tmp->content[j];
-			i++;
-			j++;
-		}
-		tmp = tmp->next;
-	}
-	ft_listclear(&list);
-	return (res);
-}
-
-int			ft_str_isalnum(char *s)
+int			ft_get_keyvalue(char *s, char **key, char **value)
 {
 	int	i;
 
+	*key = NULL;
+	*value = NULL;
 	i = 0;
-	while (s[i])
+	while (s[i] && s[i] != '=')
 	{
-		if (!(ft_isalnum(s[i])))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int		ft_concat_value(t_env *env, char **split)
-{
-	int		i;
-	char	*tmp;
-	char	*tmp2;
-	char	*tmp3;
-
-
-	i = 1;
-	while (split[i])
-	{
-		if (i == 1)
-		{
-			if (!(tmp = ft_strdup(split[i])))
-				return (-1);
-		else
-		{
-			if (!(tmp2 = ft_strjoin(" ", split[i])))
-				return (-2);
-			if (!(tmp3 = ft_strjoin(tmp, tmp2)))
-				return (-3);
-			free(tmp);
-			free(tmp2);
-			tmp = tmp3;
-		}
-		i++;
-	}
-	return (0);
-}
-
-int			*ft_search_keyvalue(char **split, t_env *env)
-{
-	if (!(ft_str_isalnum(split[0])))
-		return (0);
-	if (!(env->key = ft_strdup(split[0])))
-		return (-1);
-	if (split[1])
-	{
-		if (ft_concat_value(env, split))
+		if (!(ft_isalnum(s[i]) && s[i] != '_'))
 			return (-2);
+		i++;
+	}
+	if (s[i] == '=')
+	{
+		if (!(*key = ft_substr(s, 0, i)))
+			return (-1);
+		if(ft_get_value(s, &i, value))
+			return (-1);
 	}
 	return (0);
 }
 
-int		ft_export(t_list *cmd)
+int			ft_addmaillon(char *key, char *value)
 {
-	t_env	*res;
-	t_list	*tmp;
+	t_env	*env;
 
-	res = NULL;
-	tmp = cmd;
-	while (tmp)
+	if (!(env = malloc(sizeof(t_env *))))
+		return (-1);
+	env->key = key;
+	env->value = value;
+	env->next = g_env;
+	g_env = env;
+	return (0);
+}
+
+int			ft_export(t_list *cmd)
+{
+	t_list	*tmp;
+	t_env	*env;
+	char	*key;
+	char	*value;
+	int		r;
+
+	tmp = NULL;
+	if (cmd != NULL)
+		tmp = cmd->next;
+	r = 0;
+	if (tmp)
 	{
-		if (split = ft_split(tmp->content, '='))
+		while (tmp)
 		{
-			res = ft_search_keyvalue(split, res);
+			if ((r = ft_get_keyvalue(tmp->content, &key, &value)))
+				return (r);
+			if (key && (r = ft_check_varname(key)))
+				return (r);
+			if ((r = ft_addmaillon(key, value)))
+				return (r);
+			tmp = tmp->next;
 		}
-		tmp = tmp->next;
+	}
+	else
+		ft_env();
+	return (0);
+}
+
+void		ft_new_env(void)
+{
+	t_env	*tmp;
+
+	g_env = malloc(sizeof(t_env));
+	g_env->key = ft_strdup("VAR");
+	g_env->value = ft_strdup("VALUE");
+	tmp = malloc(sizeof(t_env));
+	g_env->next = tmp;
+	tmp->key = ft_strdup("VARZ");
+	tmp->value = ft_strdup("VA     LUW");
+	tmp->next = NULL;
+}
+
+void		ft_free_env(void)
+{
+	t_env	*tmp;
+
+	while (g_env)
+	{
+		tmp = g_env->next;
+		free(g_env->key);
+		free(g_env->value);
+		free(g_env);
+		g_env = tmp;
 	}
 }
-/*
-** 1. Retrieve key
-**		a. Cycle throught lst
-		b. Cycle throught eqch str unti = or space found
-		c. Substr 0 - =
-		d. Passer le lst et la position de = a retrieve value
-** 2. Retrieve value
-**		tant que str != space ou \0
-**		substr
-** 3. Add key value to path
-	check if key aready exists
-		remove maillon if so
-	create maillon with key value
-	add to path
-*/
+
+void ft_newcmd(t_list **cmd)
+{
+	char *s;
+	t_list *tmp;
+
+	s = ft_strdup("export");
+	tmp = ft_lstnew(s);
+	ft_lstadd_back(cmd, tmp);
+	s = ft_strdup("VALUE=name");
+	tmp = ft_lstnew(s);
+	ft_lstadd_back(cmd, tmp);
+	s = ft_strdup("2lu=n");
+	tmp = ft_lstnew(s);
+	ft_lstadd_back(cmd, tmp);
+
+}
+
+int main()
+{
+	t_list *cmd;
+	cmd = NULL;
+	ft_new_env();
+
+//	ft_newcmd(&cmd);
+	ft_export(cmd);
+	ft_env();
+	return 0;
+}

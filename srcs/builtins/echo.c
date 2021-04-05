@@ -1,33 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/12 13:57:43 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/05 16:45:46 by jcueille         ###   ########.fr       */
+/*   Created: 2021/03/31 14:38:23 by jcueille          #+#    #+#             */
+/*   Updated: 2021/03/31 21:01:11 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+#include "../../inc/sh_parser.h"
+#include "../../inc/sh_builtins.h"
 
-extern t_env *g_env;
-
-int			ft_env(void)
+int	ft_echo(t_list *cmd)
 {
-	t_env	*env;
+	t_list	*tmp;
+	int		flag;
 
-	if (!(env))
-		return (-1);
-	env = g_env;
-	while (env)
+	tmp = cmd->next;
+	flag = 0;
+	if (tmp && !(ft_strcmp(tmp->content, "-n")))
 	{
-		ft_putstr_fd(env->key, 1);
-		write(1, "=", 1);
-		ft_putstr_fd(env->value, 1);
-		ft_putstr_fd("\n", 1);
-		env = env->next;
+		flag = 1;
+		tmp = tmp->next;
 	}
-	return (0);
+	if (!(tmp))
+		return (0);
+	while (tmp)
+	{
+		ft_putstr_fd(tmp->content, 1);
+		tmp = tmp->next;
+		if(tmp)
+			ft_putstr_fd(" ", 1);
+	}
+	if (!(flag))
+		ft_putstr_fd("\n", 1);
 }
