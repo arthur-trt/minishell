@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 15:29:21 by atrouill          #+#    #+#             */
-/*   Updated: 2021/02/06 20:25:56 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/15 18:13:12 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ void	print_env(t_env *env);
 
 char	*search_env(t_env env, char *key);
 void	free_env(t_env **env);
+void	free_split(char **array);
 
 #endif

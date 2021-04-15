@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/29 16:48:56 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/15 19:04:30 by atrouill         ###   ########.fr       */
+/*   Created: 2021/04/15 13:55:54 by atrouill          #+#    #+#             */
+/*   Updated: 2021/04/15 18:12:58 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_env(t_env **env)
+/*
+** Free a char array obtain with ft_split
+**
+**	@param array Array to split
+*/
+void	free_split(char **array)
 {
-	t_env	*tmp;
-	t_env	*next;
+	int	i;
 
-	if (env)
+	i = 0;
+	while(array[i] != NULL)
 	{
-		tmp = *env;
-		while (tmp)
-		{
-			next = tmp->next;
-			free(tmp->key);
-			free(tmp->value);
-			free(tmp);
-			tmp = next;
-		}
-		*env = NULL;
+		free(array[i]);
+		i++;
 	}
+	free(array);
 }

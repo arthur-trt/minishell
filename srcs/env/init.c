@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:45 by atrouill          #+#    #+#             */
-/*   Updated: 2021/02/06 20:26:09 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/15 19:04:58 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,17 @@ void	add_env(t_env **env, char *key, char *value)
 	if (!(new = ft_malloc(sizeof(t_env))))
 		exit(EXIT_FAILURE);
 	init_env_elem(new);
-	new->key = key;
-	new->value = value;
+	new->key = ft_strdup(key);
+	new->value = ft_strdup(value);
 	if ((*env) == NULL)
 	{
-		new->next = (*env);
-		(*env) = NULL;
+		(*env) = new;
 	}
 	else
 	{
 		tmp = (*env);
 		while (tmp->next != NULL)
 			tmp = tmp->next;
-		new->next = tmp->next;
 		tmp->next = new;
 	}
 }
@@ -50,13 +48,12 @@ void	construct_env(t_env **env, char *envp[])
 	int		i;
 
 	i = 0;
+	(*env) = NULL;
 	while (envp[i])
 	{
 		tmp = ft_split(envp[i], '=');
 		add_env(env, tmp[0], tmp[1]);
-		free(tmp[0]);
-		free(tmp[1]);
-		free(tmp);
+		free_split(tmp);
 		i++;
 	}
 }

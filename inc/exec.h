@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/29 16:48:56 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/15 19:04:30 by atrouill         ###   ########.fr       */
+/*   Created: 2021/04/11 17:48:44 by atrouill          #+#    #+#             */
+/*   Updated: 2021/04/15 12:07:18 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef EXEC_H
+# define EXEC_H
 
-void	free_env(t_env **env)
-{
-	t_env	*tmp;
-	t_env	*next;
+# include "minishell.h"
 
-	if (env)
-	{
-		tmp = *env;
-		while (tmp)
-		{
-			next = tmp->next;
-			free(tmp->key);
-			free(tmp->value);
-			free(tmp);
-			tmp = next;
-		}
-		*env = NULL;
-	}
-}
+# include <dirent.h>
+
+char	*scan_dir(char *path, char *exec_name);
+char	*search_path(t_env *env, char *exec_name);
+
+#endif
