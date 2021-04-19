@@ -6,19 +6,19 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 13:07:52 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/05 15:53:39 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/19 20:46:06 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-extern t_env *g_env;
+extern t_glob *g_glob;
 
 static int	ft_delfirst_maillon(t_env *env)
 {
 	free(env->key);
 	free(env->value);
-	g_env = env->next;
+	g_glob->env = env->next;
 	free(env);
 	return (0);
 }
@@ -41,8 +41,8 @@ int			ft_unset_launcher(char *s)
 	t_env	*tmp;
 	t_env	*tmp2;
 
-	tmp = g_env;
-	tmp2 = g_env;
+	tmp = g_glob->env;
+	tmp2 = g_glob->env;
 	if (tmp && !(ft_strcmp(tmp->key, s)))
 	{
 		ft_delfirst_maillon(tmp);

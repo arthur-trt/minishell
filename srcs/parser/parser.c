@@ -6,27 +6,13 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 17:12:48 by jcueille          #+#    #+#             */
-/*   Updated: 2021/03/26 16:41:56 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/19 20:46:06 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_env		*g_env;
-
-void		ft_new_env(void)
-{
-	t_env	*tmp;
-
-	g_env = malloc(sizeof(t_env));
-	g_env->key = ft_strdup("VAR");
-	g_env->value = ft_strdup("VALUE");
-	tmp = malloc(sizeof(t_env));
-	g_env->next = tmp;
-	tmp->key = ft_strdup("VARZ");
-	tmp->value = ft_strdup("VA     LUW");
-	tmp->next = NULL;
-}
+extern	g_glob->env;
 
 /*
 **	ADDS S TO COMMAND LIST WHEN SPLITTING SPACE IS REACHED
@@ -96,40 +82,4 @@ t_list		*ft_parse(char *s)
 		if (ft_empty_buffer(&res, &command))
 			ft_parse_error(command);
 	return (command);
-}
-
-void		ft_free_env(void)
-{
-	t_env	*tmp;
-
-	while (g_env)
-	{
-		tmp = g_env->next;
-		free(g_env->key);
-		free(g_env->value);
-		free(g_env);
-		g_env = tmp;
-	}
-}
-
-int			main(void)
-{
-	char	*s;
-	t_list	*command;
-	t_list	*tmp;
-
-	ft_new_env();
-	s = ft_strdup("\"\"");
-	command = ft_parse(s);
-	tmp = command;
-	while (tmp)
-	{
-		printf("S IS %s\n", (char *)tmp->content);
-		tmp = tmp->next;
-	}
-	printf("%s\n", s);
-	free(s);
-	ft_listclear(&command);
-	ft_free_env();
-	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 13:57:43 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/05 16:45:46 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/19 20:46:06 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-extern t_env *g_env;
+extern t_glob *g_glob;
 
 int			ft_env(void)
 {
@@ -20,7 +20,7 @@ int			ft_env(void)
 
 	if (!(env))
 		return (-1);
-	env = g_env;
+	env = g_glob->env;
 	while (env)
 	{
 		ft_putstr_fd(env->key, 1);

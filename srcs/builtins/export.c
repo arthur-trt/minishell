@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 15:38:43 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/05 16:38:13 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/19 20:46:06 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "../../inc/sh_parser.h"
 #include "../../inc/sh_builtins.h"
 
-//extern t_env *g_env;
-t_env *g_env;
+//extern t_glob *g_glob;
+t_env *g_glob->env;
 
 int			ft_get_value(char *s, int *i, char **value)
 {
@@ -64,8 +64,8 @@ int			ft_addmaillon(char *key, char *value)
 		return (-1);
 	env->key = key;
 	env->value = value;
-	env->next = g_env;
-	g_env = env;
+	env->next = g_glob->env;
+	g_glob->env = env;
 	return (0);
 }
 
@@ -103,11 +103,11 @@ void		ft_new_env(void)
 {
 	t_env	*tmp;
 
-	g_env = malloc(sizeof(t_env));
-	g_env->key = ft_strdup("VAR");
-	g_env->value = ft_strdup("VALUE");
+	g_glob->env = malloc(sizeof(t_env));
+	g_glob->env->key = ft_strdup("VAR");
+	g_glob->env->value = ft_strdup("VALUE");
 	tmp = malloc(sizeof(t_env));
-	g_env->next = tmp;
+	g_glob->env->next = tmp;
 	tmp->key = ft_strdup("VARZ");
 	tmp->value = ft_strdup("VA     LUW");
 	tmp->next = NULL;
@@ -117,13 +117,13 @@ void		ft_free_env(void)
 {
 	t_env	*tmp;
 
-	while (g_env)
+	while (g_glob->env)
 	{
-		tmp = g_env->next;
-		free(g_env->key);
-		free(g_env->value);
-		free(g_env);
-		g_env = tmp;
+		tmp = g_glob->env->next;
+		free(g_glob->env->key);
+		free(g_glob->env->value);
+		free(g_glob->env);
+		g_glob->env = tmp;
 	}
 }
 

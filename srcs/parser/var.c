@@ -6,13 +6,13 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 16:15:15 by jcueille          #+#    #+#             */
-/*   Updated: 2021/03/26 16:37:21 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/19 20:46:06 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-extern t_env *g_env;
+extern t_glob *g_glob;
 
 static int	ft_bracket_check(char *s, int i)
 {
@@ -76,7 +76,7 @@ static void	ft_search_value(char *name, char **res, int *inc)
 {
 	t_env	*tmp;
 
-	tmp = g_env;
+	tmp = g_glob->env;
 	while (tmp)
 	{
 		if (!(ft_strcmp(name, tmp->key)))
@@ -86,6 +86,14 @@ static void	ft_search_value(char *name, char **res, int *inc)
 	free(name);
 	if (*res)
 		*res = ft_remove_spaces(*res);
+}
+
+char		*ft_ret_var(void)
+{
+	char	*res;
+
+	res = ft_itoa(g_glob->ret);
+	return (NULL);
 }
 
 char		*ft_search_var(char *s, int *inc, int *i)
@@ -106,6 +114,8 @@ char		*ft_search_var(char *s, int *inc, int *i)
 		(*i)++;
 	}
 	j = *i;
+	if (s[*i] == '?')
+		return (ft_ret_var());
 	while (s[*i] && s[*i] != ' ' && s[*i] != '}' && s[*i] != '\"')
 		(*i)++;
 	if (*i - j == 0)

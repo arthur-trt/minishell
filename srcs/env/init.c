@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:45 by atrouill          #+#    #+#             */
-/*   Updated: 2021/02/06 20:26:09 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/19 20:38:43 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern	t_glob *g_glob;
+extern char **environ;
+
 
 void	init_env_elem(t_env *env)
 {
@@ -44,7 +48,7 @@ void	add_env(t_env **env, char *key, char *value)
 	}
 }
 
-void	construct_env(t_env **env, char *envp[])
+static void	construct_env(t_env **env, char *envp[])
 {
 	char	**tmp;
 	int		i;
@@ -59,6 +63,17 @@ void	construct_env(t_env **env, char *envp[])
 		free(tmp);
 		i++;
 	}
+}
+
+int	ft_init_gobal(void)
+{
+	if(!(g_glob = malloc(sizeof(t_glob *))))
+	{
+		ft_putstr_fd("malloc error.\n", 2);
+		return (-1);
+	}
+	construct_env(&g_glob->env, environ);
+	return (0);
 }
 
 void	print_env(t_env *env)

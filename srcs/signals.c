@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structures.h                                       :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/28 14:47:10 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/19 20:11:17 by jcueille         ###   ########.fr       */
+/*   Created: 2021/04/16 17:09:43 by jcueille          #+#    #+#             */
+/*   Updated: 2021/04/19 20:50:35 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTURES_H
-# define STRUCTURES_H
+#include "../libftprintf/includes/libft.h"
+#include "../inc/minishell.h"
 
-typedef struct		s_env
+extern t_glob *g_glob;
+
+void	c_handler(int sigld)
 {
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}					t_env;
 
-typedef struct 		s_glob
+	ft_putstr_fd("\n", 2);
+	exit(sigld);
+}
+
+void	d_handler(int sigld)
 {
-	t_env			*env;
-	int				ret;
-}					t_glob;
-
-
-#endif
+	(void)sigld;
+	if (g_all.prog == 1)
+	{
+		g_all.err = 131;
+		kill(g_pid, SIGQUIT);
+		ft_putendl_fd("Quit (core dumped)", 1);
+	}
+	else
+		ft_putstr_fd("\b \b\b \b", 1);
+}
