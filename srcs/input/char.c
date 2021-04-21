@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 19:31:34 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/21 17:17:37 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/21 17:24:40 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,20 @@ bool	insert_char(t_line *input, int c)
 	input->line[input->cursor] = c;
 	input->lenght++;
 	input->cursor++;
-	tputs(tgetstr("im", NULL), 2, &outfun);
+	tputs(tgetstr("im", NULL), 0, &outfun);
 	outfun(c);
-	tputs(tgetstr("ei", NULL), 2, &outfun);
+	tputs(tgetstr("ei", NULL), 0, &outfun);
 	return (true);
 }
 
-//bool	delete_char(t_line *input, int c)
-//{
-//	if (input->cursor == 0)
-//		return (false);
-
-//}
+bool	delete_char(t_line *input, int c)
+{
+	if (input->cursor == 0)
+		return (false);
+	ft_memmove(input->line + input->cursor, input->line + input->cursor + 1,
+		input->lenght - input->cursor + 1);
+	move_cursor_left(input);
+	input->lenght--;
+	tputs(tgetstr("cd", NULL), 0, &outfun);
+	ft_putstr_fd(input->line + input->cursor, 0);
+}
