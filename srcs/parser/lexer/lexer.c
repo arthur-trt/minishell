@@ -6,13 +6,20 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 14:59:07 by atrouill          #+#    #+#             */
-/*   Updated: 2021/03/21 15:34:41 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/21 19:55:35 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
+/*
+**	Search for the next occurrence of quotes
+**
+**	@param str String where to look for quotes
+**	@param pos Position of the first quotes
+**
+**	@return Position of the first quotes found
+*/
 int		continue_while_quote(char *str, int pos)
 {
 	char	quote;
@@ -24,6 +31,14 @@ int		continue_while_quote(char *str, int pos)
 	return (pos);
 }
 
+/*
+**	Checks if the new command comes from a pipe or a semicolon
+**
+**	@param str Character string entered by the user
+**	@param last_pos Position of the end of the last command.
+**
+**	@return Token representing pipe or semicolon
+*/
 t_token	find_previous_token(char *str, int last_pos)
 {
 	t_token	token;
@@ -36,6 +51,13 @@ t_token	find_previous_token(char *str, int last_pos)
 	return (token);
 }
 
+/*
+**	Parse the entered line. Separates commands from pipes and semicolons.
+**
+**	@param input Character string entered by the user
+**
+**	@return Chained list containing the various separate commands
+*/
 t_lexer	*lexer(char *input)
 {
 	t_lexer	*lexer;
