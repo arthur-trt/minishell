@@ -9,6 +9,13 @@ SOURCES		+=                                 		\
 ## SRCS/INPUT ##
 
 SOURCES		+=                                 		\
+		srcs/input/cursor_pos.c                   	\
+		srcs/input/get_win_size.c                 	\
+		srcs/input/set_term_mode.c                	\
+		srcs/input/char.c                         	\
+		srcs/input/get_key.c                      	\
+		srcs/input/outfun.c                       	\
+		srcs/input/move_cursor.c                  	\
 		srcs/input/input.c                        	\
 
 

@@ -1,5 +1,8 @@
 #Compiler and Linker
-CC			:= gcc
+CC				:= clang-9
+ifeq ($(shell uname -s),Darwin)
+	CC			:= gcc
+endif
 
 #The Target Binary Program
 TARGET			:= minishell
@@ -21,10 +24,12 @@ OBJECTS			:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT
 
 #Flags, Libraries and Includes
 cflags.release		:= -Wall -Werror -Wextra
+cflags.valgrind		:= -Wall -Werror -Wextra -DDEBUG -ggdb
 cflags.debug		:= -Wall -Werror -Wextra -DDEBUG -ggdb -fsanitize=address -fno-omit-frame-pointer
 CFLAGS			:= $(cflags.$(BUILD))
 
-lib.release		:= -Llibftprintf -lftprintf
+lib.release		:=  -Llibftprintf -lftprintf -ltermcap
+
 lib.debug		:= $(lib.release) -fsanitize=address -fno-omit-frame-pointer
 LIB			:= $(lib.$(BUILD))
 

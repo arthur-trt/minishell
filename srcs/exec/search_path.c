@@ -6,16 +6,44 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 17:39:35 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/15 20:24:33 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/16 19:30:11 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*clean_path(char *path)
+
+/*
+**	Check if the user have permission to execute the file
+**
+**	@param path Path to file to check
+**
+**	@return True if user can exec, or false if not
+*/
+static bool			can_exec(char *path)
 {
-	int		len;
-	char	*tmp;
+	struct stat		f_stat;
+
+	if (stat(path, &f_stat) == 0)
+	{
+		if (f_stat.st_mode & S_IXUSR)
+			return (true);
+	}
+	return (false);
+}
+
+
+/*
+**	Check if path is correct, with ending slash
+**
+**	@param path Path to check (will be freed)
+**
+**	@return Clean path
+*/
+static char			*clean_path(char *path)
+{
+	int				len;
+	char			*tmp;
 
 	len = ft_strlen(path);
 	if (path[len -1] != '/')
@@ -27,18 +55,31 @@ static char	*clean_path(char *path)
 	return (path);
 }
 
-char	*scan_dir(char *path, char *exec_name)
+/*
+**	Open dir and read all files for find a file with the same name
+**
+**	@param path Path to folder to scan
+**	@param exec_name Name of the file to find
+**
+**	@return A clean path to the executable
+*/
+static char			*scan_dir(char *path, char *exec_name)
 {
 	DIR				*folder;
 	struct dirent	*entry;
+	char			*final_path;
 
 	folder = opendir(path);
 	while ((entry = readdir(folder)))
 	{
 		if (ft_strcmp(exec_name, entry->d_name) == 0)
 		{
-			free(folder);
-			return (ft_strjoin(path, exec_name));
+			final_path = ft_strjoin(path, exec_name);
+			if (can_exec(final_path) == true)
+			{
+				free(folder);
+				return (final_path);
+			}
 		}
 	}
 	free(folder);
@@ -53,12 +94,12 @@ char	*scan_dir(char *path, char *exec_name)
 **
 **	@return Return path + exec_name
 */
-char	*search_path(t_env *env, char *exec_name)
+char				*search_path(t_env *env, char *exec_name)
 {
-	char	*path;
-	int		i;
-	char	**tmp;
-	char	*test;
+	char			*path;
+	int				i;
+	char			**tmp;
+	char			*test;
 
 	path = search_env(*env, "PATH");
 	tmp = ft_split(path, ':');

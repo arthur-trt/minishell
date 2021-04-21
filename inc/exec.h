@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 17:48:44 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/15 12:07:18 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/17 13:28:33 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 # include <dirent.h>
 
-char	*scan_dir(char *path, char *exec_name);
-char	*search_path(t_env *env, char *exec_name);
+char				*search_path(t_env *env, char *exec_name);
 
 #endif
