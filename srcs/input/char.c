@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 19:31:34 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/21 17:24:40 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/21 17:25:29 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	insert_char(t_line *input, int c)
 	return (true);
 }
 
-bool	delete_char(t_line *input, int c)
+bool	delete_char(t_line *input)
 {
 	if (input->cursor == 0)
 		return (false);

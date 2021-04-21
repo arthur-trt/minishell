@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:02:19 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/21 16:33:24 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/21 17:29:25 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static void	special_keys(t_line *input, int key_code)
 		move_cursor_left(input);
 	if (key_code == KEY_RIGHT)
 		move_cursos_right(input);
+	if (key_code == KEY_DC)
+		delete_char(input);
 }
 
 static void	input_loop(t_line *input)

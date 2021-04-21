@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 19:57:00 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/20 20:11:42 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/21 17:26:32 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define KEY_CODE_DOWN	"\x1b\x5b\x42\0"
 # define KEY_CODE_RIGHT	"\x1b\x5b\x43\0"
 # define KEY_CODE_LEFT	"\x1b\x5b\x44\0"
+
+# define KEY_CODE_DEL	"\x1b\x5b\x33\x7e"
 
 typedef struct	s_size
 {
@@ -49,6 +51,7 @@ int		get_key(void);
 
 t_size	get_current_cursor_position(void);
 bool	insert_char(t_line *input, int c);
+bool	delete_char(t_line *input);
 
 int	outfun(int c);
 char	*input(void);
