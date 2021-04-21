@@ -6,11 +6,11 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 15:53:58 by jcueille          #+#    #+#             */
-/*   Updated: 2021/03/26 16:40:32 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/21 17:06:33 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h";
+#include "minishell.h"
 
 int		ft_parse_error(t_list *command)
 {

@@ -6,12 +6,12 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 16:31:33 by jcueille          #+#    #+#             */
-/*   Updated: 2021/03/26 16:41:05 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/21 17:08:02 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_parser.h"
-#include "libftprintf.h"
+#include "../libftprintf/includes/libftprintf.h"
 
 char		*ft_apply(char *s, int *i, char *(*f)(char *s, int *i), char *res)
 {

@@ -6,13 +6,13 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 17:12:48 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/19 20:46:06 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/21 17:01:50 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-extern	g_glob->env;
+extern	t_glob *g_glob;
 
 /*
 **	ADDS S TO COMMAND LIST WHEN SPLITTING SPACE IS REACHED

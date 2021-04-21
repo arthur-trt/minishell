@@ -6,11 +6,12 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 16:03:49 by jcueille          #+#    #+#             */
-/*   Updated: 2021/03/26 16:40:45 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/21 16:04:44 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_parser.h"
+#include "../libftprintf/includes/libftprintf.h"
 
 char		*ft_alloc_concat(int len, t_list *list)
 {

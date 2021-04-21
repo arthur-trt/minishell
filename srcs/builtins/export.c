@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 15:38:43 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/19 20:46:06 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/21 17:08:39 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../../inc/sh_builtins.h"
 
 //extern t_glob *g_glob;
-t_env *g_glob->env;
+t_glob *g_glob;
 
 int			ft_get_value(char *s, int *i, char **value)
 {
@@ -142,16 +142,4 @@ void ft_newcmd(t_list **cmd)
 	tmp = ft_lstnew(s);
 	ft_lstadd_back(cmd, tmp);
 
-}
-
-int main()
-{
-	t_list *cmd;
-	cmd = NULL;
-	ft_new_env();
-
-//	ft_newcmd(&cmd);
-	ft_export(cmd);
-	ft_env();
-	return 0;
 }

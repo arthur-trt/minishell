@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 15:58:32 by jcueille          #+#    #+#             */
-/*   Updated: 2021/03/31 12:52:09 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/21 17:05:13 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SH_PARSER_H
 #include <stdio.h>
 #include <stdlib.h>
+#include "../libftprintf/includes/libftprintf.h"
 
 char	*ft_double(char *s, int *i, int *r);
 char	*ft_concat(t_list *list, int len);

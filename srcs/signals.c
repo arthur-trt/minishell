@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 17:09:43 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/19 20:50:35 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/20 15:07:39 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ extern t_glob *g_glob;
 
 void	c_handler(int sigld)
 {
-
 	ft_putstr_fd("\n", 2);
 	exit(sigld);
 }

@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 15:29:21 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/19 20:38:22 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/20 15:05:55 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,8 @@ void	print_env(t_env *env);
 char	*search_env(t_env env, char *key);
 void	free_glob(void);
 void	ft_prompt(void);
+
+void	c_handler(int sigld);
+void	d_handler(int sigld);
 
 #endif

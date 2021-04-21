@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:45 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/19 20:38:43 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/21 17:28:51 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,26 +65,29 @@ static void	construct_env(t_env **env, char *envp[])
 	}
 }
 
-int	ft_init_gobal(void)
+/*
+**	Creates basic environment if env = NULL
+**
+**	@return 0 on success -1 if malloc error
+*/
+static int ft_empty_env(void)
 {
-	if(!(g_glob = malloc(sizeof(t_glob *))))
-	{
-		ft_putstr_fd("malloc error.\n", 2);
-		return (-1);
-	}
-	construct_env(&g_glob->env, environ);
+	char *cwd;
+	char	buf[4096];
+
+	cwd = getcwd(buf, 4096);
+	add_env(&g_glob->env, "PWD", cwd);
+	add_env(&g_glob->env, "SHLVL", ft_strdup("0"));
 	return (0);
 }
 
-void	print_env(t_env *env)
+int	ft_init_gobal(void)
 {
-	t_env	*tmp;
-
-	tmp = env;
-	while (tmp != NULL)
-	{
-		printf("key : %s\n", tmp->key);
-		printf("value : %s\n\n", tmp->value);
-		tmp = tmp->next;
-	}
+	//g_glob->env = NULL;
+	write(1, "1", 1);
+	if (environ)
+		construct_env(&g_glob->env, environ);
+	else
+		ft_empty_env();
+	return (0);
 }
