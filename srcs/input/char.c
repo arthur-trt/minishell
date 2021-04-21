@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 19:31:34 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/21 17:25:29 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/21 17:31:09 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ bool	delete_char(t_line *input)
 	input->lenght--;
 	tputs(tgetstr("cd", NULL), 0, &outfun);
 	ft_putstr_fd(input->line + input->cursor, 0);
+	return (true);
 }
