@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 18:47:31 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/21 16:34:34 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/21 16:37:10 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	move_cursos_right(t_line *input)
 {
 	t_size	pos;
 
-	if (input->cursor + 1 >= MAX_CMD_LINE || input->cursor > input->lenght)
+	if (input->cursor + 1 >= MAX_CMD_LINE || input->cursor >= input->lenght)
 		return ;
 	input->cursor++;
 //	printf("cursor_pos:\n\tcol : %zu\nrow : %zu\n", input->cursor_pos.col, input->cursor_pos.row);
