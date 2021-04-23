@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 15:01:12 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/18 15:32:52 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/23 20:12:55 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 **	Allows you to obtain the current position of the cursor in the terminal.
-**	Writes the escape sequence: "\e[6n]", then reads a response in the terminal
+**	Writes the escape sequence: "\e[6n", then reads a response in the terminal
 **	of the form: "[<ROW>;<COL>R"
 **
 **	@return Structure containing the position in rows and columns
@@ -34,4 +34,19 @@ t_size	get_current_cursor_position(void)
 		i++;
 	pos.col = ft_atoi(answer + i);
 	return (pos);
+}
+
+/*
+**	Allows you to place the cursor in the terminal according to the starting
+**	position and the relative position of the cursor
+**
+**	@param input Structure containing information about the typed line
+*/
+void	set_cursor_pos(t_line input)
+{
+	t_size	pos;
+
+	pos.col = ((input.cursor_pos.col + input.cursor) % input.win_size.col);
+	pos.row = input.cursor_pos.row - 1;
+	tputs(tgoto(tgetstr("cm", NULL), pos.col, pos.row), 1, &outfun);
 }

@@ -6,21 +6,21 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:02:19 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/21 17:29:25 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/23 20:15:31 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <minishell.h>
+#include <minishell.h>
 
-static void	init_struct(t_line *ínput)
+static void	init_struct(t_line *input)
 {
-	ínput->cursor_pos.row = 0;
-	ínput->cursor_pos.col = 0;
-	ínput->cursor = 0;
-	ínput->win_size.row = 0;
-	ínput->win_size.col = 0;
-	ínput->lenght = 0;
-	ft_bzero(ínput->line, MAX_CMD_LINE);
+	input->cursor_pos.row = 0;
+	input->cursor_pos.col = 0;
+	input->cursor = 0;
+	input->win_size.row = 0;
+	input->win_size.col = 0;
+	input->lenght = 0;
+	ft_bzero(input->line, MAX_CMD_LINE);
 }
 
 static void	special_keys(t_line *input, int key_code)
@@ -28,9 +28,19 @@ static void	special_keys(t_line *input, int key_code)
 	if (key_code == KEY_LEFT)
 		move_cursor_left(input);
 	if (key_code == KEY_RIGHT)
-		move_cursos_right(input);
-	if (key_code == KEY_DC)
+		move_cursor_right(input);
+	if (key_code == 127)
 		delete_char(input);
+	if (key_code == KEY_DC)
+		delete_char_after(input);
+	if (key_code == KEY_HOME)
+		move_cursor_to_start(input);
+	if (key_code == KEY_END)
+		move_cursor_to_end(input);
+	if (key_code == KEY_CTRL_LEFT)
+		move_cursor_left_word(input);
+	if (key_code == KEY_CTRL_RIGHT)
+		move_cursor_right_word(input);
 }
 
 static void	input_loop(t_line *input)
@@ -50,6 +60,11 @@ static void	input_loop(t_line *input)
 	}
 }
 
+/*
+**	Main function of the input. Read from the standard input
+**
+**	@return String of what the user typed
+*/
 char	*input(void)
 {
 	t_line	input;
