@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 19:57:00 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/23 20:16:39 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/24 16:56:51 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,22 @@
 
 # define MAX_CMD_LINE	4096
 
-# define KEY_CODE_UP		"\x1b\x5b\x41\0"
-# define KEY_CODE_DOWN		"\x1b\x5b\x42\0"
-# define KEY_CODE_RIGHT		"\x1b\x5b\x43\0"
-# define KEY_CODE_LEFT		"\x1b\x5b\x44\0"
-# define KEY_CODE_DEL		"\x1b\x5b\x33\x7e"
-# define KEY_CODE_HOME		"\x1b\x5b\x48\0"
-# define KEY_CODE_END		"\x1b\x5b\x46\0"
-# define KEY_CODE_CTRL_LEFT	"\x1b\x5b\x31\x3b\x35\x44"
+# define KEY_CODE_UP			"\x1b\x5b\x41\0"
+# define KEY_CODE_DOWN			"\x1b\x5b\x42\0"
+# define KEY_CODE_RIGHT			"\x1b\x5b\x43\0"
+# define KEY_CODE_LEFT			"\x1b\x5b\x44\0"
+# define KEY_CODE_DEL			"\x1b\x5b\x33\x7e"
+# define KEY_CODE_HOME			"\x1b\x5b\x48\0"
+# define KEY_CODE_END			"\x1b\x5b\x46\0"
+# define KEY_CODE_CTRL_LEFT		"\x1b\x5b\x31\x3b\x35\x44"
 # define KEY_CODE_CTRL_RIGHT	"\x1b\x5b\x31\x3b\x35\x43"
+# define KEY_CODE_CTRL_UP		"\x1b\x5b\x31\x3b\x35\x41"
+# define KEY_CODE_CTRL_DOWN		"\x1b\x5b\x31\x3b\x35\x42"
 
 # define KEY_CTRL_LEFT		1000
 # define KEY_CTRL_RIGHT		1001
+# define KEY_CTRL_UP		1002
+# define KEY_CTRL_DOWN		1003
 
 typedef struct s_size
 {
@@ -61,6 +65,7 @@ bool	delete_char(t_line *input);
 bool	delete_char_after(t_line *input);
 
 int		outfun(int c);
+int		outfun_str(char *s);
 char	*input(void);
 
 void	move_cursor_left(t_line *input);
@@ -70,6 +75,9 @@ void	move_cursor_to_end(t_line *input);
 
 void	move_cursor_left_word(t_line *input);
 void	move_cursor_right_word(t_line *input);
+
+void	move_cursor_prev_line(t_line *input);
+void	move_cursor_next_line(t_line *input);
 
 void	set_cursor_pos(t_line input);
 

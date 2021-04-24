@@ -15,7 +15,9 @@ SOURCES		+=                                 		\
 		srcs/input/char.c                         	\
 		srcs/input/get_key.c                      	\
 		srcs/input/outfun.c                       	\
+		srcs/input/move_cursor_lines.c            	\
 		srcs/input/move_cursor.c                  	\
+		srcs/input/move_cursor_words.c            	\
 		srcs/input/input.c                        	\
 
 

@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 16:04:05 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/23 20:13:38 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/24 16:57:42 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,24 @@ static int	convert_code(char *key)
 		return (KEY_CTRL_LEFT);
 	if (ft_memcmp(KEY_CODE_CTRL_RIGHT, key, 6) == 0)
 		return (KEY_CTRL_RIGHT);
+	if (ft_memcmp(KEY_CODE_CTRL_UP, key, 6) == 0)
+		return (KEY_CTRL_UP);
+	if (ft_memcmp(KEY_CODE_CTRL_DOWN, key, 6) == 0)
+		return (KEY_CTRL_DOWN);
 	return (key[0]);
 }
+
+//static void print_key(char *s)
+//{
+//	int	i;
+
+//	i = 0;
+//	while (s[i])
+//	{
+//		printf("%x ", s[i]);
+//		i++;
+//	}
+//}
 
 /*
 **	Get the code of the current key.
@@ -66,6 +82,7 @@ int	get_key(void)
 	{
 		read(0, (key_pressed + 4), 3);
 	}
+	//print_key(key_pressed);
 	key = convert_code(key_pressed);
 	free(key_pressed);
 	return (key);

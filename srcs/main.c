@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 15:11:32 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/19 20:44:03 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/24 16:18:26 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,10 @@ t_env	*env;
 
 #include <string.h>
 
-//static void print_escape_sequence(char *str)
-//{
-//        unsigned i = 0;
 
-//        while (str[i] != '\0')
-//        {
-//                if (str[i] == '\x1b')
-//                        printf("ESC");
-//                else
-//                        putchar(str[i]);
-
-//                ++i;
-//        }
-
-//        putchar('\n');
-//}
 
 int		main(int argc, char *argv[], char **envp)
 {
-//	char *buffer = (char *) malloc(2048);
-
 	(void)argc;
 	(void)argv;
 	(void)envp;
@@ -72,11 +55,30 @@ int		main(int argc, char *argv[], char **envp)
 	test = input();
 	printf("\nRETURN : %s\n", test);
 	free(test);
-//	ft_bzero(buffer, 2048);
-	//set_term_raw_mode();
-	//test = tgetstr("im", NULL);
-	//print_escape_sequence(test);
-	//set_term_default_mode();
 	return (0);
 
 }
+
+//int	main(void)
+//{
+//	t_size	win;
+//	t_size	cursor;
+
+//	set_term_raw_mode();
+//	outfun_str("PROMTP > ");
+//	win = get_win_size();
+//	cursor = get_current_cursor_position();
+//	set_term_default_mode();
+//	printf("win :\n\tcol : %zu\n\trow : %zu\n\n", win.col, win.row);
+//	printf
+//	("cursor :\n\tcol : %zu\n\trow : %zu\n\n", cursor.col, cursor.row);
+//	return (0);
+//}
+
+//int	main(void)
+//{
+//	set_term_raw_mode();
+//	get_key();
+//	set_term_default_mode();
+//	return (0);
+//}

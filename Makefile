@@ -7,7 +7,7 @@ endif
 #The Target Binary Program
 TARGET			:= minishell
 
-BUILD			:= release
+BUILD			:= debug
 
 include sources.mk
 

@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:02:19 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/23 20:15:31 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/24 17:02:57 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ static void	special_keys(t_line *input, int key_code)
 		move_cursor_left_word(input);
 	if (key_code == KEY_CTRL_RIGHT)
 		move_cursor_right_word(input);
+	if (key_code == KEY_CTRL_UP)
+		move_cursor_prev_line(input);
+	if (key_code == KEY_CTRL_DOWN)
+		move_cursor_next_line(input);
 }
 
 static void	input_loop(t_line *input)
@@ -56,7 +60,10 @@ static void	input_loop(t_line *input)
 			insert_char(input, key_code);
 		}
 		if (key_code == '\n')
+		{
+			move_cursor_to_end(input);
 			break ;
+		}
 	}
 }
 
@@ -71,6 +78,7 @@ char	*input(void)
 
 	init_struct(&input);
 	set_term_raw_mode();
+	outfun_str("PROMTP > ");
 	input.cursor_pos = get_current_cursor_position();
 	input.win_size = get_win_size();
 	input_loop(&input);

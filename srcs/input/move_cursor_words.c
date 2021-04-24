@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   special_move_cursor.c                              :+:      :+:    :+:   */
+/*   move_cursor_words.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 19:44:03 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/23 20:13:54 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/24 17:10:43 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,14 @@ void	move_cursor_to_end(t_line *input)
 void	move_cursor_left_word(t_line *input)
 {
 	if (input->cursor && input->line[input->cursor - 1] == ' ')
-		move_cursor_left(input);
+		input->cursor--;
 	while (input->line[input->cursor] == ' ' && input->cursor)
-		move_cursor_left(input);
+		input->cursor--;
 	while (input->line[input->cursor] != ' ' && input->cursor)
-		move_cursor_left(input);
+		input->cursor--;
 	if (input->cursor)
-		move_cursor_right(input);
+		input->cursor++;
+	set_cursor_pos(*input);
 }
 
 /*
@@ -59,7 +60,8 @@ void	move_cursor_left_word(t_line *input)
 void	move_cursor_right_word(t_line *input)
 {
 	while (input->line[input->cursor] != ' ' && input->cursor < input->lenght)
-		move_cursor_right(input);
+		input->cursor++;
 	while (input->line[input->cursor] == ' ' && input->cursor < input->lenght)
-		move_cursor_right(input);
+		input->cursor++;
+	set_cursor_pos(*input);
 }
