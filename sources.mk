@@ -15,9 +15,7 @@ SOURCES		+=                                 		\
 		srcs/input/char.c                         	\
 		srcs/input/get_key.c                      	\
 		srcs/input/outfun.c                       	\
-		srcs/input/move_cursor_lines.c            	\
 		srcs/input/move_cursor.c                  	\
-		srcs/input/move_cursor_words.c            	\
 		srcs/input/input.c                        	\
 
 
@@ -54,3 +52,6 @@ SOURCES		+=                                 		\
 		srcs/env/search_key.c                     	\
 
 
+SOURCES_BONUS	+= $(SOURCES)						\
+		srcs/input/move_cursor_lines_bonus.c		\
+		srcs/input/move_cursor_words_bonus.c

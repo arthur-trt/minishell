@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:02:19 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/24 17:02:57 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/24 22:06:32 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ static void	special_keys(t_line *input, int key_code)
 		move_cursor_left(input);
 	if (key_code == KEY_RIGHT)
 		move_cursor_right(input);
+}
+
+#ifdef BONUS
+static void	special_bonus_keys(t_line *input, int key_code)
+{
 	if (key_code == 127)
 		delete_char(input);
 	if (key_code == KEY_DC)
@@ -46,6 +51,7 @@ static void	special_keys(t_line *input, int key_code)
 	if (key_code == KEY_CTRL_DOWN)
 		move_cursor_next_line(input);
 }
+#endif
 
 static void	input_loop(t_line *input)
 {
@@ -55,13 +61,17 @@ static void	input_loop(t_line *input)
 	{
 		key_code = get_key();
 		special_keys(input, key_code);
+		#ifdef BONUS
+			special_bonus_keys(input, key_code);
+		#endif
 		if (ft_isprint(key_code))
 		{
 			insert_char(input, key_code);
 		}
 		if (key_code == '\n')
 		{
-			move_cursor_to_end(input);
+			input->cursor = 0;
+			set_cursor_pos(*input);
 			break ;
 		}
 	}

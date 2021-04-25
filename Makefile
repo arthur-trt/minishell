@@ -6,6 +6,7 @@ endif
 
 #The Target Binary Program
 TARGET			:= minishell
+TARGET_BONUS	:= minishell_bonus
 
 BUILD			:= debug
 
@@ -21,6 +22,7 @@ DEPEXT			:= d
 OBJEXT			:= o
 
 OBJECTS			:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
+OBJECTS_BONUS	:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES_BONUS:.$(SRCEXT)=.$(OBJEXT)))
 
 #Flags, Libraries and Includes
 cflags.release		:= -Wall -Werror -Wextra
@@ -61,6 +63,13 @@ all: directories libft $(TARGET)
 	@$(ECHO) "$(TARGET)\t\t[$(C_SUCCESS)✅$(C_RESET)]"
 	@$(ECHO) "$(C_SUCCESS)All done, compilation successful! 👌 $(C_RESET)"
 
+# Bonus rules
+bonus: CFLAGS += -DBONUS
+bonus: directories libft $(TARGET_BONUS)
+	@$(ERASE)
+	@$(ECHO) "$(TARGET)\t\t[$(C_SUCCESS)✅$(C_RESET)]"
+	@$(ECHO) "$(C_SUCCESS)All done, compilation successful with bonus! 👌 $(C_RESET)"
+
 #Remake
 re: fclean all
 
@@ -83,9 +92,14 @@ fclean: clean
 
 #Pull in dependency info for *existing* .o files
 -include $(OBJECTS:.$(OBJEXT)=.$(DEPEXT))
+-include $(OBJECTS_BONUS:.$(OBJEXT)=.$(DEPEXT))
 
 #Link
 $(TARGET): $(OBJECTS)
+	$(CC) -o $(TARGETDIR)/$(TARGET) $^ $(LIB)
+
+# Link Bonus
+$(TARGET_BONUS): $(OBJECTS_BONUS)
 	$(CC) -o $(TARGETDIR)/$(TARGET) $^ $(LIB)
 
 #Compile
@@ -104,9 +118,11 @@ $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 libft:
 	@make -s -C libftprintf
 
-
 norm:
 	@$(NORMINETTE) | $(GREP) -v "Not a valid file" | $(GREP) "Error\|Warning" -B 1 || true
 
+print_vars:
+	echo $(OBJECTS_BONUS)
+
 #Non-File Targets
-.PHONY: all re clean fclean norm libft
+.PHONY: all re clean fclean norm libft bonus print_vars
