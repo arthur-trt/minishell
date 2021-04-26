@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structures.h                                       :+:      :+:    :+:   */
+/*   sh_constants.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/28 14:47:10 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/26 20:21:14 by jcueille         ###   ########.fr       */
+/*   Created: 2021/02/25 15:06:09 by atrouill          #+#    #+#             */
+/*   Updated: 2021/03/05 18:13:07 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTURES_H
-# define STRUCTURES_H
+#ifndef SH_CONSTANTS_H
+# define SH_CONSTANTS_H
 
-typedef struct		s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}					t_env;
-
-typedef struct 		s_glob
-{
-	t_env			*env;
-	int				ret;
-}					t_glob;
-
+# define QUOTE		'\''
+# define DQUOTE		'\"'
+# define PIPE		'|'
+# define BACKSLAH	'\\'
+# define SEMICOLON	';'
 
 #endif

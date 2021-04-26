@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 17:12:48 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/21 17:01:50 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/21 20:11:45 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 extern	t_glob *g_glob;
 
 /*
-**	ADDS S TO COMMAND LIST WHEN SPLITTING SPACE IS REACHED
+**	@brief When space is reached, adds *s to the *command linked list
+**	
+**	@param s string to add
+**	@param command linked list on which to add s
+**	@return 0 on success negative value if malloc error
 */
-
 int			ft_empty_buffer(char **s, t_list **command)
 {
 	t_list	*tmp;
@@ -35,6 +38,16 @@ int			ft_empty_buffer(char **s, t_list **command)
 	return (0);
 }
 
+
+/*
+**	Checks current character and applies a function according to it
+**	
+**	@param	command linked list containing parsed commands
+**	@param	res buffer string containing the ongoing parsed string
+**	@param	s the user's input
+**	@param	i the position of the character on s
+**	@return r = 0 on success r < 0 if error
+*/
 int			ft_check_char(t_list *command, char **res, char *s, int *i)
 {
 	int		r;
@@ -56,6 +69,12 @@ int			ft_check_char(t_list *command, char **res, char *s, int *i)
 	return (r);
 }
 
+/*
+**	Parses the input according to bash standards
+**	
+**	@param	s the user's input we are going to parse
+**	@return command linked list containing parsed commands or NULL if an error occured.
+*/
 t_list		*ft_parse(char *s)
 {
 	t_list	*command;

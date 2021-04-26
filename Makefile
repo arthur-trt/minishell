@@ -4,7 +4,7 @@ CC			:= clang-9
 #The Target Binary Program
 TARGET			:= minishell
 
-BUILD			:= debug
+BUILD			:= release
 
 include sources.mk
 
@@ -12,7 +12,7 @@ include sources.mk
 SRCDIR			:= srcs
 INCDIR			:= inc
 BUILDDIR		:= obj
-TARGETDIR		:= .
+TARGETDIR		:= bin
 SRCEXT			:= c
 DEPEXT			:= d
 OBJEXT			:= o
@@ -21,12 +21,12 @@ OBJECTS			:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT
 
 #Flags, Libraries and Includes
 cflags.release		:= -Wall -Werror -Wextra
-cflags.debug		:= -DDEBUG -ggdb -fsanitize=address -fno-omit-frame-pointer
+cflags.debug		:= -Wall -Werror -Wextra -DDEBUG -ggdb  -fno-omit-frame-pointer
 CFLAGS			:= $(cflags.$(BUILD))
 
-lib.release		:=  -Llibftprintf -lftprintf -ltermcap
+lib.release		:=  -Llibftprintf -lftprintf
 
-lib.debug		:= $(lib.release) -fsanitize=address -fno-omit-frame-pointer
+lib.debug		:= $(lib.release)  -fno-omit-frame-pointer
 LIB			:= $(lib.$(BUILD))
 
 INC			:= -I$(INCDIR) -I/usr/local/include
@@ -73,7 +73,7 @@ clean:
 
 #Full Clean, Objects and Binaries
 fclean: clean
-	@$(RM) -rf $(TARGET)
+	@$(RM) -rf $(TARGETDIR)
 	@make $@ -s -C libftprintf
 
 

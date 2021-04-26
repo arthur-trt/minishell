@@ -6,14 +6,21 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 16:03:49 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/21 16:04:44 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/25 18:42:59 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_parser.h"
 #include "../libftprintf/includes/libftprintf.h"
 
-char		*ft_alloc_concat(int len, t_list *list)
+/*
+**	Allocates space for a concatenated string
+**	
+**	@param	list the list to concatenate
+**	@param	len the total size of all the strings contained in list
+**	@return tmp_bis a string containing the parsed text
+*/
+char		*ft_alloc_concat(t_list *list, int len)
 {
 	char	*res;
 
@@ -25,6 +32,13 @@ char		*ft_alloc_concat(int len, t_list *list)
 	return (res);
 }
 
+/*
+**	Concatenates all the strings of list in a single char*
+**	
+**	@param	list the list to concatenate
+**	@param	len the total size of all the strings contained in list
+**	@return res the concatened strings, NULL if error
+*/
 char		*ft_concat(t_list *list, int len)
 {
 	t_list	*tmp;
@@ -34,7 +48,7 @@ char		*ft_concat(t_list *list, int len)
 	int		j;
 
 	i = 0;
-	if (!(res = ft_alloc_concat(len, list)))
+	if (!(res = ft_alloc_concat(list, len)))
 		return (NULL);
 	tmp = list;
 	while (tmp)
@@ -53,6 +67,15 @@ char		*ft_concat(t_list *list, int len)
 	return (res);
 }
 
+/*
+**	Parses the inside of double quotes
+**	
+**	@param	s the user's input
+**	@param	i the position of the character on s
+**	@param	len the total length of parsed text
+**	@param	list the text that's been parsed so far
+**	@return r = 0 success r < 0 error
+*/
 static int	ft_check_double(char *s, int *i, int *len, t_list **list)
 {
 	int		r;
@@ -75,6 +98,14 @@ static int	ft_check_double(char *s, int *i, int *len, t_list **list)
 	return (r);
 }
 
+/*
+**	Parses double quoted strings
+**	
+**	@param	s the user's input
+**	@param	i the position of the character on s
+**	@param	r an int containing error value
+**	@return res a string containing the parsed text
+*/
 char		*ft_double(char *s, int *i, int *r)
 {
 	t_list	*list;
@@ -85,7 +116,7 @@ char		*ft_double(char *s, int *i, int *r)
 	list = NULL;
 	res = NULL;
 	(*i)++;
-	if ((*r) = ft_check_double(s, i, &len, &list))
+	if (((*r) = ft_check_double(s, i, &len, &list)))
 		return (NULL);
 	if (s[*i] != '\"')
 	{

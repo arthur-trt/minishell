@@ -1,36 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   modify_value.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/16 17:09:43 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/24 20:41:07 by jcueille         ###   ########.fr       */
+/*   Created: 2021/04/26 22:30:11 by jcueille          #+#    #+#             */
+/*   Updated: 2021/04/26 22:34:46 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libftprintf/includes/libft.h"
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 extern t_glob *g_glob;
 
-void	c_handler(int sigld)
+int		ft_modify_value(char *key, char *new_value)
 {
-	ft_putstr_fd("\n", 2);
-	g_glob->ret = 130;
-	exit(sigld);
-}
+	t_env	*tmp;
 
-void	d_handler(int sigld)
-{
-	(void)sigld;
-	//if (g_all.prog == 1)
-	//{
-	//	g_glob->ret = 131;
-	//	kill(g_pid, SIGQUIT);
-	//	ft_putendl_fd("Quit (core dumped)", 1);
-	//}
-	//else
-	//	ft_putstr_fd("\b \b\b \b", 1);
+	tmp = g_glob->env;
+	while (tmp)
+	{
+		if (!(ft_strcmp(key, tmp->key)))
+		{
+			if (tmp->value)
+				free(tmp->value);
+			if (!(tmp->value = ft_strdup(new_value)))
+				return (-1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
 }

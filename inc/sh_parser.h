@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 15:58:32 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/21 17:05:13 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/21 22:02:50 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@
 #include "../libftprintf/includes/libftprintf.h"
 
 char	*ft_double(char *s, int *i, int *r);
+int		ft_apply_double(char *s, int *i, char *(*f)(char *s, int *i, int *r), char **res);
+char	*ft_apply(char *s, int *i, char *(*f)(char *s, int *i), char *res);
+char	*ft_apply_var(char *s, int *i, char *res);
 char	*ft_concat(t_list *list, int len);
-char	*ft_alloc_concat(int len, t_list *list);
+char	*ft_alloc_concat(t_list *list, int len);
 
 int		ft_quoted_esc(char *s, int *i, t_list **list, int *len);
 int		ft_dollar(char *s, int *i, t_list **list, int *len);

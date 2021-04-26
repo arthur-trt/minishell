@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 16:15:15 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/19 20:46:06 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/24 21:31:38 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 extern t_glob *g_glob;
 
+/*
+**	Check if a opened curly bracket has a closing curly bracket
+**	
+**	@param	s user's input string
+**	@param	i the position of the current character on s
+**	@return 1 if bracket is closed, 0 if bracket isn't closed
+*/
 static int	ft_bracket_check(char *s, int i)
 {
 	while (s[i])
@@ -72,30 +79,40 @@ static char	*ft_remove_spaces(char *s)
 	return (res);
 }
 
-static void	ft_search_value(char *name, char **res, int *inc)
+/*
+**	Get the value of a variable
+**	
+**	@param	name the name of the variable to search
+**	@param	i the position of the current character on s
+**	@return res the value of the variable or NULL if the variable doesn't exist
+*/
+char *ft_search_value(char *name)
 {
 	t_env	*tmp;
+	char	*res;
 
+	res = NULL;
 	tmp = g_glob->env;
 	while (tmp)
 	{
 		if (!(ft_strcmp(name, tmp->key)))
-			*res = ft_strdup(tmp->value);
+			res = ft_strdup(tmp->value);
 		tmp = tmp->next;
 	}
 	free(name);
-	if (*res)
-		*res = ft_remove_spaces(*res);
+	if (res)
+		res = ft_remove_spaces(res);
+	return (res);
 }
 
-char		*ft_ret_var(void)
-{
-	char	*res;
-
-	res = ft_itoa(g_glob->ret);
-	return (NULL);
-}
-
+/*
+**	Variable expansion
+**	
+**	@param	s user's input string
+**	@param	inc	a counter used to increment i
+**	@param	i the position of the current character on s
+**	@return res the value of the variable or NULL if the variable doesn't exist
+*/
 char		*ft_search_var(char *s, int *inc, int *i)
 {
 	int		j;
@@ -103,25 +120,24 @@ char		*ft_search_var(char *s, int *inc, int *i)
 	char	*res;
 
 	(*i)++;
-	res = NULL;
 	if (!(s[*i]))
-		return (res);
+		return (NULL);
 	if (s[*i] == '{')
 	{
 		if (!(ft_bracket_check(s, *i)))
-			return (res);
+			return (NULL);
 		(*inc) = 1;
 		(*i)++;
 	}
 	j = *i;
 	if (s[*i] == '?')
-		return (ft_ret_var());
+		return (ft_itoa(g_glob->ret));
 	while (s[*i] && s[*i] != ' ' && s[*i] != '}' && s[*i] != '\"')
 		(*i)++;
 	if (*i - j == 0)
 		return (NULL);
 	name = ft_substr(s, j, *i - j);
-	ft_search_value(name, &res, inc);
+	res = ft_search_value(name);
 	if (s[*i] == '"')
 		(*i)--;
 	return (res);

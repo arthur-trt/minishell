@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 14:38:23 by jcueille          #+#    #+#             */
-/*   Updated: 2021/03/31 21:01:11 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/21 19:10:18 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ int	ft_echo(t_list *cmd)
 	}
 	if (!(flag))
 		ft_putstr_fd("\n", 1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 15:38:43 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/21 17:08:39 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/24 21:30:50 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int			ft_addmaillon(char *key, char *value)
 int			ft_export(t_list *cmd)
 {
 	t_list	*tmp;
-	t_env	*env;
 	char	*key;
 	char	*value;
 	int		r;

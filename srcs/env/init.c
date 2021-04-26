@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:45 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/21 17:28:51 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/26 22:29:09 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	init_env_elem(t_env *env)
 	env->next = NULL;
 }
 
-void	add_env(t_env **env, char *key, char *value)
+void	add_env(char *key, char *value)
 {
 	t_env	*new;
 	t_env	*tmp;
@@ -31,16 +31,16 @@ void	add_env(t_env **env, char *key, char *value)
 	if (!(new = ft_malloc(sizeof(t_env))))
 		exit(EXIT_FAILURE);
 	init_env_elem(new);
-	new->key = key;
-	new->value = value;
-	if ((*env) == NULL)
+	new->key = ft_strdup(key);
+	new->value = ft_strdup(value);
+	if ((g_glob->env) == NULL)
 	{
-		new->next = (*env);
-		(*env) = NULL;
+		new->next = NULL;
+		g_glob->env = new;
 	}
 	else
 	{
-		tmp = (*env);
+		tmp = g_glob->env;
 		while (tmp->next != NULL)
 			tmp = tmp->next;
 		new->next = tmp->next;
@@ -48,16 +48,17 @@ void	add_env(t_env **env, char *key, char *value)
 	}
 }
 
-static void	construct_env(t_env **env, char *envp[])
+static void	construct_env(void)
 {
 	char	**tmp;
 	int		i;
 
 	i = 0;
-	while (envp[i])
+	while (environ[i])
 	{
-		tmp = ft_split(envp[i], '=');
-		add_env(env, tmp[0], tmp[1]);
+		tmp = ft_split(environ[i], '=');
+		//printf("%s = %s", tmp[0], tmp[1]);
+		add_env(tmp[0], tmp[1]);
 		free(tmp[0]);
 		free(tmp[1]);
 		free(tmp);
@@ -76,17 +77,17 @@ static int ft_empty_env(void)
 	char	buf[4096];
 
 	cwd = getcwd(buf, 4096);
-	add_env(&g_glob->env, "PWD", cwd);
-	add_env(&g_glob->env, "SHLVL", ft_strdup("0"));
+	add_env("PWD", cwd);
+	add_env("SHLVL", ft_strdup("0"));
 	return (0);
 }
 
 int	ft_init_gobal(void)
 {
-	//g_glob->env = NULL;
-	write(1, "1", 1);
+	g_glob = malloc(sizeof(t_glob));
+	g_glob->env = NULL;
 	if (environ)
-		construct_env(&g_glob->env, environ);
+		construct_env();
 	else
 		ft_empty_env();
 	return (0);

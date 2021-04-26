@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 13:57:43 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/19 20:46:06 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/26 20:23:21 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int			ft_env(void)
 {
 	t_env	*env;
 
-	if (!(env))
-		return (-1);
 	env = g_glob->env;
 	while (env)
 	{

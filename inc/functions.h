@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 15:29:21 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/20 15:05:55 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/26 22:36:40 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@
 
 void	*ft_malloc(size_t size);
 void	init_env_elem(t_env *env);
-void	add_env(t_env **env, char *key, char *value);
+void	add_env(char *key, char *value);
 int		ft_init_gobal(void);
-void	print_env(t_env *env);
+char	*ft_clean_str(char *str);
 
 char	*search_env(t_env env, char *key);
+int		ft_modify_value(char *key, char *new_value);
 void	free_glob(void);
 void	ft_prompt(void);
 

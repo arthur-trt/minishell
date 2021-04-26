@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 15:11:32 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/21 17:29:22 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/26 22:43:51 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,16 @@
 
 t_glob	*g_glob;
 
-int	main(int argc, char *argv[], char **envp)
+int	main(int argc, char *argv[])
 {
-
 	int		x;
 	char	*tmp;
 
+	(void)argv;
+	(void)argc;
 	x = 1;
 	g_glob = NULL;
+	//g_glob->env = NULL;
 	if(ft_init_gobal())
 		return (-1);
 	ft_env();

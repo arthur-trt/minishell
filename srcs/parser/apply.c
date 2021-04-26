@@ -6,13 +6,23 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 16:31:33 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/21 17:08:02 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/04/21 20:21:53 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_parser.h"
 #include "../libftprintf/includes/libftprintf.h"
 
+
+/*
+**	Applies a function  for single quotes and strings
+**	
+**	@param	s the user's input
+**	@param	i the position of the character on s
+**	@param	f the function we'll apply to parse s
+**	@param	res a buffer that may contain previously parsed text that we will combine with the f's return value
+**	@return tmp_bis a string containing the parsed text
+*/
 char		*ft_apply(char *s, int *i, char *(*f)(char *s, int *i), char *res)
 {
 	char	*tmp;
@@ -30,6 +40,15 @@ char		*ft_apply(char *s, int *i, char *(*f)(char *s, int *i), char *res)
 	return (tmp_bis);
 }
 
+/*
+**	Applies a function  for double quotes
+**	
+**	@param	s the user's input
+**	@param	i the position of the character on s
+**	@param	f the function we'll apply to parse s
+**	@param	res a buffer that may contain previously parsed text that we will combine with the f's return value
+**	@return r = 0 if success r < 0 if error
+*/
 int			ft_apply_double(char *s, int *i,
 							char *(*f)(char *s, int *i, int *r), char **res)
 {
@@ -51,6 +70,14 @@ int			ft_apply_double(char *s, int *i,
 	return (r);
 }
 
+/*
+**	Applies a function  for variable expansion
+**	
+**	@param	s the user's input
+**	@param	i the position of the character on s
+**	@param	res a buffer that may contain previously parsed text that we will combine with the f's return value
+**	@return tmp a string containing the parsed text
+*/
 char		*ft_apply_var(char *s, int *i, char *res)
 {
 	char	*tmp;
