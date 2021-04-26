@@ -15,6 +15,8 @@ SOURCES		+=                                 		\
 		srcs/input/char.c                         	\
 		srcs/input/get_key.c                      	\
 		srcs/input/outfun.c                       	\
+		srcs/input/move_cursor_lines_bonus.c      	\
+		srcs/input/move_cursor_words_bonus.c      	\
 		srcs/input/move_cursor.c                  	\
 		srcs/input/input.c                        	\
 
@@ -23,6 +25,18 @@ SOURCES		+=                                 		\
 
 SOURCES		+=                                 		\
 		srcs/exec/search_path.c                   	\
+
+
+## SRCS/HISTORY ##
+
+SOURCES		+=                                 		\
+		srcs/history/print_history.c              	\
+		srcs/history/add_elem_history.c           	\
+		srcs/history/nav_history.c                	\
+		srcs/history/backup_history.c             	\
+		srcs/history/free_history.c               	\
+		srcs/history/append_history.c             	\
+		srcs/history/construct_history.c          	\
 
 
 ## SRCS/UTILS ##
@@ -52,6 +66,10 @@ SOURCES		+=                                 		\
 		srcs/env/search_key.c                     	\
 
 
-SOURCES_BONUS	+= $(SOURCES)						\
-		srcs/input/move_cursor_lines_bonus.c		\
-		srcs/input/move_cursor_words_bonus.c
+## BONUS ##
+
+SOURCES_BONUS	+= $(SOURCES)                 			\
+		srcs/input/move_cursor_lines_bonus.c      	\
+		srcs/input/move_cursor_words_bonus.c      	\
+
+

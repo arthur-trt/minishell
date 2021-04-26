@@ -6,13 +6,9 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 15:11:32 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/24 16:18:26 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/26 16:41:01 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "minishell.h"
-
-t_env	*env;
 
 //int	main(int argc, char *argv[], char **envp)
 //{
@@ -42,8 +38,7 @@ t_env	*env;
 //}
 
 #include <string.h>
-
-
+#include "minishell.h"
 
 int		main(int argc, char *argv[], char **envp)
 {
@@ -51,9 +46,21 @@ int		main(int argc, char *argv[], char **envp)
 	(void)argv;
 	(void)envp;
 	char	*test;
+	t_hist	*hist;
 
-	test = input();
-	printf("\nRETURN : %s\n", test);
+
+	hist = construct_hist();
+	while (true)
+	{
+		test = input(&hist);
+		printf("\nRETURN : %s\n", test);
+		if (ft_strcmp(test, "exit") == 0)
+			break ;
+		printf("\n");
+		free(test);
+	}
+	backup_history(hist);
+	free_history(&hist);
 	free(test);
 	return (0);
 

@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 19:57:00 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/24 16:56:51 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/26 16:34:15 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@
 # define KEY_CTRL_UP		1002
 # define KEY_CTRL_DOWN		1003
 
+typedef struct	s_hist
+{
+	char		*line;
+	size_t		len;
+	struct s_hist		*next;
+	struct s_hist		*prev;
+}				t_hist;
 typedef struct s_size
 {
 	size_t	row;
@@ -50,6 +57,7 @@ typedef struct s_line
 	size_t	cursor;
 	t_size	cursor_pos;
 	t_size	win_size;
+	size_t	hist_pos;
 }	t_line;
 
 void	set_term_default_mode(void);
@@ -66,7 +74,7 @@ bool	delete_char_after(t_line *input);
 
 int		outfun(int c);
 int		outfun_str(char *s);
-char	*input(void);
+char	*input(t_hist **history);
 
 void	move_cursor_left(t_line *input);
 void	move_cursor_right(t_line *input);
@@ -80,5 +88,24 @@ void	move_cursor_prev_line(t_line *input);
 void	move_cursor_next_line(t_line *input);
 
 void	set_cursor_pos(t_line input);
+
+
+
+
+# define HISTORY_PATH	"/home/user42/.sh_history"
+
+
+
+void		history_add_elem_list(t_hist **list, t_hist *new);
+t_hist	*history_new_elem_list(char *line, size_t len);
+void	append_history(char *input, t_hist **head);
+void	print_hist(t_hist *head);
+void	free_history(t_hist **head);
+
+void	history_nav_up(t_line *input, t_hist **hist);
+void	history_nav_down(t_line *input, t_hist **hist);
+
+t_hist	*construct_hist(void);
+bool	backup_history(t_hist *hist);
 
 #endif
