@@ -32,6 +32,7 @@ t_hist	*construct_hist(void)
 		append_history(line, &hist);
 		free(line);
 	}
+	free(line);
 	close(fd);
 	return (hist);
 }
