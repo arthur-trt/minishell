@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 11:35:25 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/26 17:01:52 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/27 10:38:29 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	history_nav_up(t_line *input, t_hist **hist)
 		fill_line(input, (*hist)->line);
 		outfun_str(input->line);
 		input->hist_pos++;
-
 	}
 }
 

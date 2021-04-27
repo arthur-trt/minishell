@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 11:28:27 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/26 17:01:07 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/27 10:38:50 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ void	append_history(char *input, t_hist **head)
 		history_add_elem_list(
 			head,
 			history_new_elem_list(input, len + 1)
-		);
+			);
 	}
 }

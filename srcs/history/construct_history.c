@@ -21,7 +21,7 @@ t_hist	*construct_hist(void)
 {
 	int			fd;
 	char		*line;
-	t_hist	*hist;
+	t_hist		*hist;
 
 	hist = NULL;
 	fd = open(HISTORY_PATH, O_RDONLY);
