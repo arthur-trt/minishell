@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:02:19 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/26 16:28:30 by atrouill         ###   ########.fr       */
+/*   Updated: 2021/04/27 10:32:49 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ static void	input_loop(t_line *input, t_hist **hist)
 
 /*
 **	Main function of the input. Read from the standard input
+**
+**	@param history Linked list representing the history
 **
 **	@return String of what the user typed
 */
