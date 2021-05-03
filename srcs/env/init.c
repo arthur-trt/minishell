@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:45 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/26 22:29:09 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/05/02 18:08:03 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,10 @@ static int ft_empty_env(void)
 	return (0);
 }
 
+/*
+** malloc space for global variable
+**	@return 0 on success 
+*/
 int	ft_init_gobal(void)
 {
 	g_glob = malloc(sizeof(t_glob));

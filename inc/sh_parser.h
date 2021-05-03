@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 15:58:32 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/21 22:02:50 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/05/02 20:39:05 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include "../libftprintf/includes/libftprintf.h"
 
+t_list	*ft_parse(char *s);
 char	*ft_double(char *s, int *i, int *r);
 int		ft_apply_double(char *s, int *i, char *(*f)(char *s, int *i, int *r), char **res);
 char	*ft_apply(char *s, int *i, char *(*f)(char *s, int *i), char *res);

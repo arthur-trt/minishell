@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:47:10 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/26 20:21:14 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/05/02 18:37:42 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef struct 		s_glob
 {
 	t_env			*env;
 	int				ret;
+	int				save_out;
+	int				save_in;
 }					t_glob;
 
 

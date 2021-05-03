@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 16:48:56 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/19 20:37:44 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/05/02 18:06:23 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 extern t_glob *g_glob;
 
+/*
+**	Free global variable
+*/
 void	free_glob(void)
 {
 	t_env	*tmp;
@@ -25,6 +28,8 @@ void	free_glob(void)
 		while (tmp)
 		{
 			next = tmp->next;
+			free(tmp->key);
+			free(tmp->value);
 			free(tmp);
 			tmp = next;
 		}
