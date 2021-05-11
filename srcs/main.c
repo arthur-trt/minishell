@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 15:11:32 by atrouill          #+#    #+#             */
-/*   Updated: 2021/05/04 00:12:02 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/05/06 20:03:59 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,12 @@ int			ft_exec(t_lexer *lexed)
 	t_lexer	*tmp;
 	int		fdin;
 	int		fdout;
+	int		fdtemp;
+	int		fdpipe[2];
+	int		ret;
 
 	tmp = lexed;
+	fdtemp = NULL;
 	fdin = NULL;
 	fdout = NULL;
 	while (tmp)
@@ -126,8 +130,31 @@ int			ft_exec(t_lexer *lexed)
      	g_glob->save_in = dup(0);
      	g_glob->save_out = dup(1);
 		cmds = ft_parse(tmp->cmd);
-		ft_redirection_check(cmds, &fdin, &fdout);
-		while (tmp->token)
+		ft_redirection_check(cmds, &fdin, &fdtemp);
+		dup2(fdin, 0);
+		close(fdin);		
+		if (tmp->next->token == T_SEMICOLON || tmp->next == NULL)
+		{	
+			if (fdtemp)
+				fdout = fdtemp;
+			else
+				fdout = dup(g_glob->save_out);
+		}
+		else
+		{
+        	pipe(fdpipe);
+        	fdout=fdpipe[1];
+        	fdin=fdpipe[0];
+		}
+		dup2(fdout,1);
+	    close(fdout);
+		ret=fork();
+		if(ret==0)
+		{
+			execvp(scmd[i].args[0], scmd[i].args);
+			perror(â€œexecvpâ€);
+			exit(1);
+		}
 		tmp = tmp->next;
 	}
 	return (0);	
