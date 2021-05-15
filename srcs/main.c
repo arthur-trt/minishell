@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 15:11:32 by atrouill          #+#    #+#             */
-/*   Updated: 2021/05/11 20:53:20 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/05/15 14:31:29 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int			ft_redirect(t_list *tmp, int *i, int *fdin, int *fdout)
 
 	r = 0;
 	(void)fdout;
-	if (tmp->content[*i] == '<' && tmp->content[*i] == '>' )
+	if ((char)tmp->content[*i] == '<' && tmp->content[*i] == '>' )
 		r = ft_reverse();
 	else if (tmp->content[*i] == '<')
 		r = ft_less(tmp, i, fdin);
@@ -122,13 +122,10 @@ int			ft_exec(t_lexer *lexed)
 	int		ret;
 
 	tmp = lexed;
-	fdtemp = NULL;
-	fdin = NULL;
-	fdout = NULL;
 	while (tmp)
 	{
-     	g_glob->save_in = dup(0);
-     	g_glob->save_out = dup(1);
+		g_glob->save_in = dup(0);
+		g_glob->save_out = dup(1);
 		cmds = ft_parse(tmp->cmd);
 		ft_redirection_check(cmds, &fdin, &fdtemp);
 		dup2(fdin, 0);
@@ -142,19 +139,23 @@ int			ft_exec(t_lexer *lexed)
 		}
 		else
 		{
-        	pipe(fdpipe);
-        	fdout=fdpipe[1];
-        	fdin=fdpipe[0];
+			pipe(fdpipe);
+			fdout=fdpipe[1];
+			fdin=fdpipe[0];
 		}
 		dup2(fdout,1);
-	    close(fdout);
+		close(fdout);
 		ret=fork();
 		if(ret==0)
 		{
-			execve(cmds->content, );
-			perror(â€œexecvpâ€);
+			execve(cmds->content,  );
 			exit(1);
 		}
+		dup2(g_glob->save_in, 0);
+		dup2(g_glob->save_out, 1);
+		close(g_glob->save_in);
+		close(g_glob->save_out);
+		waitpid(ret, NULL, NULL);
 		tmp = tmp->next;
 	}
 	return (0);	

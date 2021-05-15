@@ -1,10 +1,14 @@
 #Compiler and Linker
 CC			:= clang-9
+ifeq ($(shell uname -s),Darwin)
+	CC		:= gcc
+endif
 
 #The Target Binary Program
 TARGET			:= minishell
+TARGET_BONUS		:= minishell-bonus
 
-BUILD			:= release
+BUILD			:= debug
 
 include sources.mk
 
@@ -18,15 +22,17 @@ DEPEXT			:= d
 OBJEXT			:= o
 
 OBJECTS			:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
+OBJECTS_BONUS		:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES_BONUS:.$(SRCEXT)=.$(OBJEXT)))
 
 #Flags, Libraries and Includes
 cflags.release		:= -Wall -Werror -Wextra
-cflags.debug		:= -Wall -Werror -Wextra -DDEBUG -ggdb  -fno-omit-frame-pointer
+cflags.valgrind		:= -Wall -Werror -Wextra -DDEBUG -ggdb
+cflags.debug		:= -DDEBUG -ggdb -fsanitize=address -fno-omit-frame-pointer
 CFLAGS			:= $(cflags.$(BUILD))
 
-lib.release		:=  -Llibftprintf -lftprintf
+lib.release		:=  -Llibftprintf -lftprintf -ltermcap
 
-lib.debug		:= $(lib.release)  -fno-omit-frame-pointer
+lib.debug		:= $(lib.release) -fsanitize=address -fno-omit-frame-pointer
 LIB			:= $(lib.$(BUILD))
 
 INC			:= -I$(INCDIR) -I/usr/local/include
@@ -51,40 +57,51 @@ HIDE_ERR		:= 2> /dev/null || true
 GREP			:= grep --color=auto --exclude-dir=.git
 NORMINETTE		:= norminette `ls`
 
-#Defauilt Make
+# Defauilt Make
 all: directories libft $(TARGET)
 	@$(ERASE)
 	@$(ECHO) "$(TARGET)\t\t[$(C_SUCCESS)✅$(C_RESET)]"
 	@$(ECHO) "$(C_SUCCESS)All done, compilation successful! 👌 $(C_RESET)"
 
-#Remake
+# Bonus rule
+bonus: CFLAGS += -DBONUS
+bonus: directories libft $(TARGET_BONUS)
+	@$(ERASE)
+	@$(ECHO) "$(TARGET)\t\t[$(C_SUCCESS)✅$(C_RESET)]"
+	@$(ECHO) "$(C_SUCCESS)All done, compilation successful with bonus! 👌 $(C_RESET)"
+
+# Remake
 re: fclean all
 
-#Make the Directories
+# Make the Directories
 directories:
 	@mkdir -p $(TARGETDIR)
 	@mkdir -p $(BUILDDIR)
 
-#Clean only Objecst
+# Clean only Objecst
 clean:
 	@$(RM) -rf $(BUILDDIR)
 	@make $@ -s -C libftprintf
 
 
-#Full Clean, Objects and Binaries
+# Full Clean, Objects and Binaries
 fclean: clean
 	@$(RM) -rf $(TARGETDIR)
 	@make $@ -s -C libftprintf
 
 
-#Pull in dependency info for *existing* .o files
+# Pull in dependency info for *existing* .o files
 -include $(OBJECTS:.$(OBJEXT)=.$(DEPEXT))
 
-#Link
+# Link
 $(TARGET): $(OBJECTS)
 	$(CC) -o $(TARGETDIR)/$(TARGET) $^ $(LIB)
 
-#Compile
+# Link Bonus
+$(TARGET_BONUS): $(OBJECTS_BONUS)
+	$(CC) -o $(TARGETDIR)/$(TARGET) $^ $(LIB)
+
+# Compile
 $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(dir $@)
 	@$(ECHO) "$(TARGET)\t\t[$(C_PENDING)⏳$(C_RESET)]"
@@ -104,5 +121,5 @@ libft:
 norm:
 	@$(NORMINETTE) | $(GREP) -v "Not a valid file" | $(GREP) "Error\|Warning" -B 1 || true
 
-#Non-File Targets
-.PHONY: all re clean fclean norm libft
+# Non-File Targets
+.PHONY: all re clean fclean norm bonus libft

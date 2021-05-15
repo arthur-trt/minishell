@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:45 by atrouill          #+#    #+#             */
-/*   Updated: 2021/05/02 18:08:03 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/05/15 15:05:40 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ static int ft_empty_env(void)
 */
 int	ft_init_gobal(void)
 {
+	
 	g_glob = malloc(sizeof(t_glob));
 	g_glob->env = NULL;
 	if (environ)
