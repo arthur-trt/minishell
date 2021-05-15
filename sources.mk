@@ -35,17 +35,7 @@ SOURCES		+=                                 		\
 ## SRCS/INPUT ##
 
 SOURCES		+=                                 		\
-		srcs/input/char.c                         	\
-		srcs/input/cursor_pos.c                   	\
-		srcs/input/get_key.c                      	\
-		srcs/input/get_win_size.c                 	\
 		srcs/input/input.c                        	\
-		srcs/input/move_cursor.c                  	\
-		srcs/input/move_cursor_lines_bonus.c      	\
-		srcs/input/move_cursor_words_bonus.c      	\
-		srcs/input/outfun.c                       	\
-		srcs/input/set_term_mode.c                	\
-		srcs/input/special_key_bonus.c            	\
 
 
 ## SRCS/PARSER ##
@@ -79,6 +69,7 @@ SOURCES		+=                                 		\
 		srcs/utils/dir.c                          	\
 		srcs/utils/ft_malloc.c                    	\
 		srcs/utils/prompt.c                       	\
+<<<<<<< HEAD
 
 
 ## BONUS ##
@@ -87,5 +78,7 @@ SOURCES_BONUS	+= $(SOURCES)                 			\
 		srcs/input/move_cursor_lines_bonus.c      	\
 		srcs/input/move_cursor_words_bonus.c      	\
 		srcs/input/special_key_bonus.c            	\
+=======
+>>>>>>> 1eae8d047a99a9864bbdef51e1f593c564ff71fd
 
 

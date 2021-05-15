@@ -6,13 +6,36 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 20:15:26 by jcueille          #+#    #+#             */
-/*   Updated: 2021/05/11 21:00:10 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/05/15 15:50:05 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
 
 extern t_glob *g_glob;
+
+int				ft_exec_path(t_list *cmds)
+{
+	char		*filename;
+	char		*execname;
+	char		**path;
+	int			i;
+	struct stat file;
+
+	i = -1;
+	if (cmds->content[0] == '>' || cmds->content[0] == '/')
+		filename = cmds->content;
+	else
+	{
+		execname = ft_strjoin("/", cmds->content);
+		path = ft_split(cmds->content, ':');
+		while (path[++i])
+		{
+			filename = ft_strjoin(path[i], execname);
+			
+		}
+	}
+}
 
 int			is_builtin(t_list *cmds)
 {
@@ -74,7 +97,7 @@ char		**argv_exec_creator(t_list *cmds)
 		i++;
 		tmp = tmp->next;
 	}
-	if(!(res = malloc(sizeof(char*) * i + 1)))
+	if (!(res = malloc(sizeof(char*) * i + 1)))
 		return (NULL);
 	i = 0;
 	tmp = cmds;
