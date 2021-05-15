@@ -6,7 +6,7 @@
 /*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 15:11:32 by atrouill          #+#    #+#             */
-/*   Updated: 2021/05/06 20:03:59 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/05/11 20:53:20 by jcueille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int			ft_exec(t_lexer *lexed)
 		ret=fork();
 		if(ret==0)
 		{
-			execvp(scmd[i].args[0], scmd[i].args);
+			execve(cmds->content, );
 			perror(â€œexecvpâ€);
 			exit(1);
 		}
