@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   double.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 16:03:49 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/25 18:42:59 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/05/15 12:45:57 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,17 @@
 
 /*
 **	Allocates space for a concatenated string
-**	
+**
 **	@param	list the list to concatenate
 **	@param	len the total size of all the strings contained in list
 **	@return tmp_bis a string containing the parsed text
 */
-char		*ft_alloc_concat(t_list *list, int len)
+char	*ft_alloc_concat(t_list *list, int len)
 {
 	char	*res;
 
-	if (!(res = ft_calloc(len + 1, sizeof(char))))
+	res = ft_calloc(len + 1, sizeof(char));
+	if (res == NULL)
 	{
 		ft_listclear(&list);
 		return (NULL);
@@ -34,12 +35,12 @@ char		*ft_alloc_concat(t_list *list, int len)
 
 /*
 **	Concatenates all the strings of list in a single char*
-**	
+**
 **	@param	list the list to concatenate
 **	@param	len the total size of all the strings contained in list
 **	@return res the concatened strings, NULL if error
 */
-char		*ft_concat(t_list *list, int len)
+char	*ft_concat(t_list *list, int len)
 {
 	t_list	*tmp;
 	char	*res;
@@ -48,7 +49,8 @@ char		*ft_concat(t_list *list, int len)
 	int		j;
 
 	i = 0;
-	if (!(res = ft_alloc_concat(list, len)))
+	res = ft_alloc_concat(list, len);
+	if (res == NULL)
 		return (NULL);
 	tmp = list;
 	while (tmp)
@@ -69,7 +71,7 @@ char		*ft_concat(t_list *list, int len)
 
 /*
 **	Parses the inside of double quotes
-**	
+**
 **	@param	s the user's input
 **	@param	i the position of the character on s
 **	@param	len the total length of parsed text
@@ -100,13 +102,13 @@ static int	ft_check_double(char *s, int *i, int *len, t_list **list)
 
 /*
 **	Parses double quoted strings
-**	
+**
 **	@param	s the user's input
 **	@param	i the position of the character on s
 **	@param	r an int containing error value
 **	@return res a string containing the parsed text
 */
-char		*ft_double(char *s, int *i, int *r)
+char	*ft_double(char *s, int *i, int *r)
 {
 	t_list	*list;
 	char	*res;
@@ -116,7 +118,8 @@ char		*ft_double(char *s, int *i, int *r)
 	list = NULL;
 	res = NULL;
 	(*i)++;
-	if (((*r) = ft_check_double(s, i, &len, &list)))
+	(*r) = ft_check_double(s, i, &len, &list);
+	if ((*r) != 0)
 		return (NULL);
 	if (s[*i] != '\"')
 	{

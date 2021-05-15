@@ -3,21 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 15:38:43 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/24 21:30:50 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/05/15 15:21:36 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
-#include "../../inc/sh_parser.h"
-#include "../../inc/sh_builtins.h"
+#include "minishell.h"
 
-//extern t_glob *g_glob;
-t_glob *g_glob;
+extern t_glob *g_glob;
 
-int			ft_get_value(char *s, int *i, char **value)
+int	ft_get_value(char *s, int *i, char **value)
 {
 	int	k;
 
@@ -28,12 +25,13 @@ int			ft_get_value(char *s, int *i, char **value)
 		while (s[*i])
 			(*i)++;
 	}
-	if (!(*value = ft_substr(s, k, *i - k)))
+	*value = ft_substr(s, k, *i - k);
+	if (*value == NULL)
 		return (-1);
 	return (0);
 }
 
-int			ft_get_keyvalue(char *s, char **key, char **value)
+int	ft_get_keyvalue(char *s, char **key, char **value)
 {
 	int	i;
 
@@ -56,7 +54,7 @@ int			ft_get_keyvalue(char *s, char **key, char **value)
 	return (0);
 }
 
-int			ft_addmaillon(char *key, char *value)
+int	ft_addmaillon(char *key, char *value)
 {
 	t_env	*env;
 
@@ -69,7 +67,7 @@ int			ft_addmaillon(char *key, char *value)
 	return (0);
 }
 
-int			ft_export(t_list *cmd)
+int	ft_export(t_list *cmd)
 {
 	t_list	*tmp;
 	char	*key;

@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   append_history.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/31 14:38:23 by jcueille          #+#    #+#             */
-/*   Updated: 2021/05/15 15:18:03 by atrouill         ###   ########.fr       */
+/*   Created: 2021/04/26 11:28:27 by atrouill          #+#    #+#             */
+/*   Updated: 2021/04/27 10:38:50 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_echo(t_list *cmd)
+/*
+**	Adds a new item to the history
+**
+**	@param input New item to add
+**	@param head Linked list representing the history
+*/
+void	append_history(char *input, t_hist **head)
 {
-	t_list	*tmp;
-	int		flag;
+	size_t	len;
 
-	tmp = cmd->next;
-	flag = 0;
-	if (tmp && !(ft_strcmp(tmp->content, "-n")))
+	len = ft_strlen(input);
+	if (len < MAX_CMD_LINE)
 	{
-		flag = 1;
-		tmp = tmp->next;
+		history_add_elem_list(
+			head,
+			history_new_elem_list(input, len + 1)
+			);
 	}
-	if (!(tmp))
-		return (0);
-	while (tmp)
-	{
-		ft_putstr_fd(tmp->content, 1);
-		tmp = tmp->next;
-		if(tmp)
-			ft_putstr_fd(" ", 1);
-	}
-	if (!(flag))
-		ft_putstr_fd("\n", 1);
-	return (0);
 }

@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   var.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 16:15:15 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/24 21:31:38 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/05/15 13:46:00 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-extern t_glob *g_glob;
+extern t_glob	*g_glob;
 
 /*
 **	Check if a opened curly bracket has a closing curly bracket
-**	
+**
 **	@param	s user's input string
 **	@param	i the position of the current character on s
 **	@return 1 if bracket is closed, 0 if bracket isn't closed
@@ -39,7 +39,8 @@ static char	*ft_add_space(char **ss, int i, char *tmp)
 	char	*joined;
 
 	spaced = NULL;
-	if (!(spaced = ft_strjoin(ss[i], " ")))
+	spaced = ft_strjoin(ss[i], " ");
+	if (spaced == NULL)
 		return (NULL);
 	if (tmp)
 	{
@@ -81,12 +82,12 @@ static char	*ft_remove_spaces(char *s)
 
 /*
 **	Get the value of a variable
-**	
+**
 **	@param	name the name of the variable to search
 **	@param	i the position of the current character on s
 **	@return res the value of the variable or NULL if the variable doesn't exist
 */
-char *ft_search_value(char *name)
+char	*ft_search_value(char *name)
 {
 	t_env	*tmp;
 	char	*res;
@@ -107,20 +108,19 @@ char *ft_search_value(char *name)
 
 /*
 **	Variable expansion
-**	
+**
 **	@param	s user's input string
 **	@param	inc	a counter used to increment i
 **	@param	i the position of the current character on s
 **	@return res the value of the variable or NULL if the variable doesn't exist
 */
-char		*ft_search_var(char *s, int *inc, int *i)
+char	*ft_search_var(char *s, int *inc, int *i)
 {
 	int		j;
 	char	*name;
 	char	*res;
 
-	(*i)++;
-	if (!(s[*i]))
+	if (!(s[++(*i)]))
 		return (NULL);
 	if (s[*i] == '{')
 	{

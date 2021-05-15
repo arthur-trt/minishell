@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -10,43 +11,46 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <stdbool.h>
-#include <strings.h>
-#include "../../libft/libft.h"
+#include "minishell.h"
 
-static char	*ft_trim_home(char *cwd)
+extern t_glob	*g_glob;
+
+static char	*get_username(void)
 {
-    int		i;
-    char	*path;
+	char	*username;
 
-    i = 6;
-    while (cwd[i] != '/')
-        i++;
-    path = ft_substr(cwd, i, ft_strlen(cwd));
-    return (path);
+	username = getenv("USER");
+	if (username == NULL)
+		username = ft_strdup("username");
+	return (username);
+}
+
+static char *get_home(void)
+{
+	char	*home;
+
+	home = getenv("HOME");
+	return (home);
 }
 
 void		ft_prompt(void)
 {
-    char	cwd_buffer[4096];
-    char	*cwd;
-    char	*path;
+	char	cwd_buffer[MAX_CMD_LINE];
+	char	*cwd;
+	char	*path;
 
-    cwd = getcwd(cwd_buffer, 4096);
-    if (ft_strncmp(cwd, "/home", 5) == 0)
-    {
-        path = ft_trim_home(cwd);
-        write (1, "~", 1);
-    }
-    else
-        path = ft_strdup(cwd);
-    ft_putstr_fd("\e[1;32m", 1);
-    ft_putstr_fd(path, 1);
-    ft_putstr_fd(" > \e[0m", 1);
-    free (path);
+	ft_bzero(cwd_buffer, MAX_CMD_LINE);
+	cwd = getcwd(cwd_buffer, MAX_CMD_LINE);
+	if (ft_strcmp(cwd, get_home()) == 0)
+	{
+		free(cwd);
+		cwd = ft_strdup("~");
+	}
+	ft_putstr_fd("\e[1;32m", 1);
+	ft_putstr_fd(get_username(), 1);
+	ft_putstr_fd("@", 1);
+	ft_putstr_fd(cwd, 1);
+	ft_putstr_fd(" > \e[0m", 1);
+
 }
+

@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.h                                        :+:      :+:    :+:   */
+/*   sh_utils.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 15:29:21 by atrouill          #+#    #+#             */
-/*   Updated: 2021/04/26 22:36:40 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/05/15 16:50:57 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNCTIONS_H
-# define FUNCTIONS_H
+#ifndef SH_UTILS_H
+# define SH_UTILS_H
 
 # include "minishell.h"
 
-void	*ft_malloc(size_t size);
-void	init_env_elem(t_env *env);
-void	add_env(char *key, char *value);
-int		ft_init_gobal(void);
 char	*ft_clean_str(char *str);
-
-char	*search_env(t_env env, char *key);
-int		ft_modify_value(char *key, char *new_value);
-void	free_glob(void);
-void	ft_prompt(void);
 
 void	c_handler(int sigld);
 void	d_handler(int sigld);

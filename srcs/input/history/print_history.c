@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structures.h                                       :+:      :+:    :+:   */
+/*   print_hist.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/28 14:47:10 by atrouill          #+#    #+#             */
-/*   Updated: 2021/05/02 18:37:42 by jcueille         ###   ########.fr       */
+/*   Created: 2021/04/26 11:37:15 by atrouill          #+#    #+#             */
+/*   Updated: 2021/04/26 11:38:59 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTURES_H
-# define STRUCTURES_H
+#include "minishell.h"
 
-typedef struct		s_env
+void	print_hist(t_hist *head)
 {
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}					t_env;
+	t_hist	*tmp;
 
-typedef struct 		s_glob
-{
-	t_env			*env;
-	int				ret;
-	int				save_out;
-	int				save_in;
-}					t_glob;
-
-
-#endif
+	tmp = head;
+	while (tmp)
+	{
+		printf("content : %s\n", tmp->line);
+		printf("len : %zu\n\n", tmp->len);
+		tmp = tmp->next;
+	}
+}

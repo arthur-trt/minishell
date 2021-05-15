@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_malloc.c                                        :+:      :+:    :+:   */
+/*   move_cursor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/11 15:24:17 by atrouill          #+#    #+#             */
-/*   Updated: 2021/01/28 14:04:34 by atrouill         ###   ########.fr       */
+/*   Created: 2021/04/19 18:47:31 by atrouill          #+#    #+#             */
+/*   Updated: 2021/04/23 19:43:55 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*ft_malloc(size_t size)
+/*
+**	Move the cursor to the left
+**
+**	@param input Structure t_line
+*/
+void	move_cursor_left(t_line *input)
 {
-	char	*ret;
+	if (input->cursor == 0)
+		return ;
+	input->cursor--;
+	set_cursor_pos(*input);
+}
 
-	ret = malloc(size);
-	if (ret == NULL)
-	{
-		ft_printf("Malloc failed.");
-		exit (1);
-	}
-	return (ret);
+/*
+**	Move the cursor to the right
+**
+**	@param input Structure t_line
+*/
+void	move_cursor_right(t_line *input)
+{
+	if (input->cursor + 1 >= MAX_CMD_LINE || input->cursor >= input->lenght)
+		return ;
+	input->cursor++;
+	set_cursor_pos(*input);
 }

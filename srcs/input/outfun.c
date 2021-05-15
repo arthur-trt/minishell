@@ -1,39 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   outfun.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/31 14:38:23 by jcueille          #+#    #+#             */
-/*   Updated: 2021/05/15 15:18:03 by atrouill         ###   ########.fr       */
+/*   Created: 2021/04/18 19:58:45 by atrouill          #+#    #+#             */
+/*   Updated: 2021/05/15 14:06:26 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_echo(t_list *cmd)
+/*
+**	Equivalent to puthcar, use for write special char by termputs
+**
+**	@param c Char to write on stdout
+**
+**	@return Return the number written
+*/
+int	outfun(int c)
 {
-	t_list	*tmp;
-	int		flag;
+	return (write(0, &c, 1));
+}
 
-	tmp = cmd->next;
-	flag = 0;
-	if (tmp && !(ft_strcmp(tmp->content, "-n")))
+int	outfun_str(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
 	{
-		flag = 1;
-		tmp = tmp->next;
+		tputs(tgetstr("im", NULL), 1, &outfun);
+		outfun(s[i]);
+		tputs(tgetstr("ei", NULL), 1, &outfun);
+		i++;
 	}
-	if (!(tmp))
-		return (0);
-	while (tmp)
-	{
-		ft_putstr_fd(tmp->content, 1);
-		tmp = tmp->next;
-		if(tmp)
-			ft_putstr_fd(" ", 1);
-	}
-	if (!(flag))
-		ft_putstr_fd("\n", 1);
-	return (0);
+	return (ft_strlen(s));
 }

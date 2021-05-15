@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   squoted.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcueille <jcueille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 16:30:48 by jcueille          #+#    #+#             */
-/*   Updated: 2021/04/21 20:13:58 by jcueille         ###   ########.fr       */
+/*   Updated: 2021/05/15 12:51:16 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libftprintf/includes/libftprintf.h"
 
-
 /*
 **	Handles single (strong) quoted words
-**	
+**
 **	@param	s the user's input
-**	@param	i the position of the character on s starting one the first single quote
-**	@return res string with the text inside of the quotes or NULL in case of error
+**	@param	i the position of the character on s starting one the
+**	first single quote
+**	@return res string with the text inside of the quotes
+**	or NULL in case of error
 */
 char	*ft_single(char *s, int *i)
 {
